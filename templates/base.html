@@ -1,0 +1,30 @@
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% bootstrap_css %}
+    {% bootstrap_jquery %}
+
+</head>
+<body>
+
+{% block content %}
+<main role="main" class="container">
+<div class="pb-2 mb-2 border-bottom">
+    {% include 'navigation-bar.html' %}
+</div>
+    <div class="jumbotron card card-image mt-3 px-5 "
+         style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+        <div class="text-white text-center">
+            <h1 class="display-4">Witajcie.</h1>
+        </div>
+    </div>
+</main>
+{% endblock %}
+</body>
+</html>
