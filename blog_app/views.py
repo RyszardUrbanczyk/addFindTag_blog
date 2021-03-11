@@ -11,8 +11,7 @@ from django.urls import reverse
 class BaseView(View):
 
     def get(self, request):
-        ctx = {'objects': Program.objects.all()}
-        return render(request, 'base.html', ctx)
+        return render(request, 'index.html')
 
 
 class ProgramsListView(View):
@@ -26,8 +25,7 @@ class ProgramsListView(View):
 class ProgramModifyView(View):
 
     def get(self, request, id):
-        ctx = {'object_id': Program.objects.get(id=id)}
-        return render(request, 'program-modify.html', ctx)
+        return render(request, 'program-modify.html')
 
     def post(self, request, id):
         pass
