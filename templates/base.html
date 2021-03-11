@@ -9,42 +9,24 @@
     <title>Document</title>
     {% bootstrap_css %}
     {% bootstrap_jquery %}
-
 </head>
 <body>
-
-{% block content %}
+{% block header %}
     <main role="main" class="container">
-        <div class="pb-2 mb-2 border-bottom">
-            {% include 'navigation-bar.html' %}
-        </div>
-        <div class="container mt-4">
-            <div class="row justify-content-md-center">
-
-            </div>
-            <div class="row">
-                <div class="col-md-auto">
-                    <p>Variable width content<br>
-                        Variable width content<br>
-                        Variable width content<br>
-                        Variable width content<br>
-                        Variable width content<br></p>
-                </div>
-                <div class="col">
-                    <p>Tutaj treści bloga będą, Tutaj treści bloga będą, Tutaj treści bloga będą,
-                        Tutaj treści bloga będą,Tutaj treści bloga będą,Tutaj treści bloga będą,
-                        Tutaj treści bloga będą,Tutaj treści bloga będą,Tutaj treści bloga będą,
-                        Tutaj treści bloga będą,Tutaj treści bloga będą,Tutaj treści bloga będą,
-                        Tutaj treści bloga będą,Tutaj treści bloga będą,Tutaj treści bloga będą,
-                    </p>
-                </div>
-
-                <div class="col col-lg-2">
-                    3 of 3
-                </div>
-            </div>
-        </div>
+        {% include 'navigation-bar.html' %}
+    {% include 'navigator-bar-programs.html' %}
     </main>
 {% endblock %}
+
+
+    <div class="container">
+        <div class="jumbotron">
+            {% block content %}
+                {% include 'index.html' %}
+            {% endblock %}
+        </div>
+    </div>
+
+
 </body>
 </html>

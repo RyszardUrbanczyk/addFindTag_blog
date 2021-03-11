@@ -1,38 +1,18 @@
-{% load bootstrap4 %}
-<!doctype html>
-<html lang="pl-PL">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    {% bootstrap_css %}
-    {% bootstrap_jquery %}
+{#{% load bootstrap4 %}#}
 
-</head>
-<body>
+{% block content %}
+<h1 class="display-4">Znajdź / dodaj tag.</h1>
+<p class="text-secondary">
+    Aplikacja jest pracą zrealizownaą na zakończenie kursu Python Developer.
+    Jest blogiem, w którym użytkownicy mogą znaleźć interesujące ich zagadnienia/tagi z zakresu trzech
+    aplikacji firmy Adobe: InDesign, Illustrator, Photoshop. Każdy użytkownik może podzielić się swoją
+    wiedzą, właśnie z zakresu wymienionych aplikacji
+</p>
+<h4 class="display-4">Założenie.</h4>
+<p class="text-secondary">
+    Kiedy tworzysz projekt lub jego część, możesz podzielić się wiedzą, którą posiadasz.
+    Opisz co i jak robisz, jakich narzędzi używasz, następnie wpisz kluczowe pojęcia tak, aby ktoś inny,
+    korzystając z wyszukiwarki, mógł je znaleźć i w ten sposób dotrzeć do wiedzy.
+</p>
+{% endblock %}
 
-<main role="main" class="container">
-    <div class="jumbotron card card-image mt-5 px-5 "
-         style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
-        <div class="text-white text-center">
-            <h1 class="display-4">Znajdź / dodaj tag.</h1>
-            <p class="text-center">
-                Aplikacja jest pracą zrealizownaą na zakończenie kursu Python Developer.
-                Jest blogiem, w którym użytkownicy mogą znaleźć interesujące ich zagadnienia/tagi z zakresu trzech
-                aplikacji firmy Adobe: InDesign, Illustrator, Photoshop. Każdy użytkownik może podzielić się swoją
-                wiedzą, właśnie z zakresu wymienionych aplikacji
-            </p>
-            <h4 class="display-6">Założenie.</h4>
-            <p class="text-center">
-                Kiedy tworzysz projekt lub jego część, możesz podzielić się wiedzą, którą posiadasz.
-                Opisz co i jak robisz, jakich narzędzi używasz, następnie wpisz kluczowe pojęcia tak, aby ktoś inny,
-                korzystając z wyszukiwarki, mógł je znaleźć i w ten sposób dotrzeć do wiedzy.
-            </p>
-            <a class="btn btn-primary mt-5" href="{% url 'base' %}" role="button">Wejście</a>
-        </div>
-    </div>
-</main>
-</body>
-</html>

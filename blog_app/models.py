@@ -8,3 +8,6 @@ from django.utils import timezone
 class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
+
+    def get_detail_url(self):
+        return f'/program-modify/{self.id}'

@@ -1,0 +1,14 @@
+
+{#<ul class="list-group list-group-horizontal-md">#}
+{#    {% for obj in objects %}#}
+{#        <li class="list-group-item"><a href="">{{ obj.name }}</a></li>#}
+{#        {% empty %}#}
+{#        <li class="list-group-item">Pusto</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
+
+{% for obj in objects %}
+<button type="button" class="btn btn-primary btn-sm mb-2 ">
+    {{ obj.name }}
+</button>
+{% endfor %}
