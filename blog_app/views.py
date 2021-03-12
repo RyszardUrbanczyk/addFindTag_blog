@@ -95,14 +95,9 @@ class AddTagView(CreateView):
         ctx = {'form': AddTagForm()}
         return ctx
 
+class TagsListView(View):
 
+    def get(self, request):
+        ctx = {'objects': Tag.objects.all()}
+        return render(request, 'tags-list.html', ctx)
 
-# class AddProductView(CreateView):
-#     template_name = 'add-product.html'
-#     model = Product
-#     fields = '__all__'
-#     success_url = '/products/'
-#
-#     def get_context_data(self, **kwargs):
-#         ctx = {'form': MySpecialForm()}
-#         return ctx

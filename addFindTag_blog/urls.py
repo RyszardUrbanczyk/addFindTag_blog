@@ -27,4 +27,5 @@ urlpatterns = [
     path('logout/', views.LogOutView.as_view(), name='logout'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('add_tag/', views.AddTagView.as_view(), name='add-tag'),
+    path('tags_list/', views.TagsListView.as_view(), name='tags-list'),
 ]

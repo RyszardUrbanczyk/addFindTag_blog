@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for obj in objects %}
+    {{ obj.publish }} {{ obj.author }}
+{{ obj.title }} {{ obj.body }}
+{% empty %}
+Pusto
+{% endfor %}
+{% endblock %}

@@ -8,10 +8,10 @@ class AddTagForm(forms.ModelForm):
     programs = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
                                               widget=forms.CheckboxSelectMultiple)
 
+
     class Meta:
         model = Tag
         fields = '__all__'
-
 
 
 class LoginForm(forms.Form):
@@ -19,13 +19,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-
 class RegisterForm(forms.Form):
-
-    username = forms.CharField(widget=forms.TextInput(attrs={"autocomplete":"off"}))
+    username = forms.CharField(widget=forms.TextInput(attrs={"autocomplete": "off"}))
     password1 = forms.CharField(widget=forms.PasswordInput)
     password2 = forms.CharField(widget=forms.PasswordInput)
-
 
     def clean(self):
         cleaned_data = super().clean()
