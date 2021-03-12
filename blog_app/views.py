@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView, UpdateView
-from blog_app.forms import LoginForm, RegisterForm
-from blog_app.models import Program
+from blog_app.forms import LoginForm, RegisterForm,AddTagForm
+from blog_app.models import Program, Tag
 from django.views.generic.list import ListView
 from django.urls import reverse
 
@@ -83,3 +83,26 @@ class RegisterView(View):
             return redirect('login')
         else:
             return render(request, 'form.html', {'form': form})
+
+
+class AddTagView(CreateView):
+    template_name = 'add-tag.html'
+    model = Tag
+    fields = '__all__'
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        ctx = {'form': AddTagForm()}
+        return ctx
+
+
+
+# class AddProductView(CreateView):
+#     template_name = 'add-product.html'
+#     model = Product
+#     fields = '__all__'
+#     success_url = '/products/'
+#
+#     def get_context_data(self, **kwargs):
+#         ctx = {'form': MySpecialForm()}
+#         return ctx

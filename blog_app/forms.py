@@ -1,15 +1,17 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from blog_app.models import Program
+from blog_app.models import Program, Tag
 
 
-class MySpecialForm(forms.ModelForm):
-    programs = forms.CharField()
+class AddTagForm(forms.ModelForm):
+    programs = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
+                                              widget=forms.CheckboxSelectMultiple)
 
     class Meta:
-        model = Program
+        model = Tag
         fields = '__all__'
+
 
 
 class LoginForm(forms.Form):
