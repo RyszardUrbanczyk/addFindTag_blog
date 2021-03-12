@@ -13,14 +13,17 @@ class Program(models.Model):
         return f'/edit_program/{self.id}'
 
 
-# class Tag(models.Model):
-#     STATUS_CHOICES = [
-#         ('draft', 'Draft'),
-#         ('published', 'Published')
-#     ]
-#
-#     title = models.CharField(max_length=120)
-#     author = models.ForeignKey(User, on_delete=models.CASCADE)
-#     body = models.TextField
+class Tag(models.Model):
+    # STATUS_CHOICES = [
+    #     ('draft', 'Draft'),
+    #     ('published', 'Published')
+    # ]
+
+    title = models.CharField(max_length=120)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    publish = models.DateTimeField(auto_now_add=True)
+    uptated = models.DateTimeField(auto_now=True)
+    programs = models.ManyToManyField(Program)
 
 
