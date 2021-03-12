@@ -1,7 +1,8 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView, UpdateView
-from blog_app.forms import MySpecialForm
+from blog_app.forms import LoginForm
 from blog_app.models import Program
 from django.views.generic.list import ListView
 from django.urls import reverse
@@ -35,13 +36,23 @@ class EditProgramView(UpdateView):
     model = Program
     fields = '__all__'
     success_url = '/programs-list/'
-    # form_class = MySpecialForm
 
-#
-#
-# class EditProductView(UpdateView):
-#     template_name = 'edit-product.html'
-#     model = Product
-#     # fields = '__all__'
-#     success_url = '/products/'
-#     form_class = MySpecialForm
+
+class LoginView(View):
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'form.html', {'form':form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, **form.cleaned_data)
+            if user is not None:
+                login(request, user)
+                redirect_url = request.GET.get('next', 'index')
+                #próbujemy pobrać ze słownika request.GET wartość która znajduje sie pod kluczem "next" jesli nie ma 'next'
+                # to zwracamy "index"
+                return redirect(redirect_url)
+            else:
+                return redirect('login')

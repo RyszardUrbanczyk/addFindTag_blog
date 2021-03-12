@@ -23,4 +23,5 @@ urlpatterns = [
     path('programs-list/', views.ProgramsListView.as_view(), name='programs-list'),
     path('add-program/', views.AddProgramView.as_view(), name='add-program'),
     path('edit_program/<int:pk>/', views.EditProgramView.as_view(), name='edit-program'),
+    path('login/', views.LoginView.as_view(), name='login'),
 ]
