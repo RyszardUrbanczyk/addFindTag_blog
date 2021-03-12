@@ -10,4 +10,4 @@ class Program(models.Model):
     description = models.TextField()
 
     def get_detail_url(self):
-        return f'/program-modify/{self.id}'
+        return f'/edit_program/{self.id}'

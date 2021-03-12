@@ -14,19 +14,15 @@
 {% block header %}
     <main role="main" class="container">
         {% include 'navigation-bar.html' %}
-    {% include 'navigator-bar-programs.html' %}
     </main>
 {% endblock %}
 
-
-    <div class="container">
-        <div class="jumbotron">
-            {% block content %}
-{#                {% include 'index.html' %}#}
-            {% endblock %}
-        </div>
+<div class="container">
+    <div class="jumbotron">
+        {% block content %}
+        {% endblock %}
     </div>
-
+</div>
 
 </body>
 </html>

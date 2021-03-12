@@ -6,13 +6,16 @@
             {#    <span class="navbar-toggler-icon"></span>#}
             {#  </button>#}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                <ul class="navbar-nav mr-auto small">
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Startowa</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'programs-list' %}">Programy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-program' %}">Dodaj program</a>
                     </li>
 <!--
                     <li class="nav-item">

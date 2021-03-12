@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import CreateView, UpdateView
+from blog_app.forms import MySpecialForm
 from blog_app.models import Program
 from django.views.generic.list import ListView
 from django.urls import reverse
@@ -17,16 +19,29 @@ class BaseView(View):
 class ProgramsListView(View):
 
     def get(self, request):
-        objects = Program.objects.all()
-        ctx = {'objects': objects}
+        ctx = {'objects': Program.objects.all().order_by('name')}
         return render(request, 'programs-list.html', ctx)
 
 
-class ProgramModifyView(View):
+class AddProgramView(CreateView):
+    template_name = 'add-program.html'
+    model = Program
+    fields = '__all__'
+    success_url = '/programs-list/'
 
-    def get(self, request, id):
-        return render(request, 'program-modify.html')
 
-    def post(self, request, id):
-        pass
+class EditProgramView(UpdateView):
+    template_name = 'edit-program.html'
+    model = Program
+    fields = '__all__'
+    success_url = '/programs-list/'
+    # form_class = MySpecialForm
 
+#
+#
+# class EditProductView(UpdateView):
+#     template_name = 'edit-product.html'
+#     model = Product
+#     # fields = '__all__'
+#     success_url = '/products/'
+#     form_class = MySpecialForm
