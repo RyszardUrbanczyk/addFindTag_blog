@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+
 {% for obj in objects %}
-    {{ obj.publish }} | {{ obj.author }}<br>
-{{ obj.title }} | {{ obj.body }} |
+    {{ obj.title }} | {{ obj.body }} | <hr>
 {% empty %}
 Pusto
 {% endfor %}
-{% endblock %}
 
-{#{{ obj.title }} | {{ obj.body }} | {%  for i in obj.programs %} {{ i.name }} {% endfor %}#}
-{#{{ obj.programs.values_list 'name' }}#}
+{% endblock %}

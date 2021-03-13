@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+
+
 # from django.utils import timezone
 
 # Create your models here.
@@ -11,10 +13,11 @@ class Tag(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
+
 
     def get_detail_url(self):
-        return f'/edit-tag/{self.id}'
+        return f'/tag-detail/{self.id}'
 
 
 class Post(models.Model):
@@ -24,8 +27,9 @@ class Post(models.Model):
     # ]
 
     title = models.CharField(max_length=120)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     publish = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag) # related_name='+'
+    tags = models.ManyToManyField(Tag)  # related_name='+'
+

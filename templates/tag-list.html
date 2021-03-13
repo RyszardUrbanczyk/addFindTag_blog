@@ -2,15 +2,13 @@
 
 {% block content %}
     {% for obj in objects %}
-        <div class="container pb-2 mb-2 border-bottom">
-        <h1 class="display-4">{{ obj.name }}</h1>
-            <p class="text-secondary">{{ obj.description }}</p>
-            {% if user.is_authenticated  %}
-                <a href="{{ obj.get_detail_url }}" class="btn btn-secondary btn-sm" role="button">Modyfikuj</a>
-            {% endif %}
-
+        <div class="card mb-2">
+            <h4 class="card-header">{{ obj.name }}</h4>
+            <div class="card-body">
+                <p class="card-text">{{ obj.description }}</p>
+                <a href="{{ obj.get_detail_url }}" class="card-link">Zobacz posty</a>
+            </div>
         </div>
-
     {% endfor %}
 {% endblock %}
 

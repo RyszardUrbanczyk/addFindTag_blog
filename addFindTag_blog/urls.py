@@ -24,6 +24,7 @@ urlpatterns = [
     path('logout/', views.LogOutView.as_view(), name='logout'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('tag-list/', views.TagListView.as_view(), name='tag-list'),
+    path('tag-detail/<int:id>', views.TagDetailView.as_view(), name='tag-detail'),
     path('add-tag/', views.AddTagView.as_view(), name='add-tag'),
     path('post-list/', views.PostListView.as_view(), name='post-list'),
     path('add-post/', views.AddPostView.as_view(), name='add-post'),

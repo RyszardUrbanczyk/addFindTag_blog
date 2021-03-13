@@ -30,6 +30,14 @@ class TagListView(View):
         return render(request, 'tag-list.html', ctx)
 
 
+class TagDetailView(View):
+
+    def get(self, request, id):
+        object = Tag.objects.get(id=id)
+        x = object.post_set.all()
+        return render(request, 'tag-detail.html', {'object': object, 'x':x})
+
+
 class AddTagView(CreateView):
     """
     In this View is form to adding tags to database.
@@ -44,9 +52,8 @@ class PostListView(View):
 
     def get(self, request):
         posts = Post.objects.all()
-        # tags = [{'title': t.title, 'body': t.body, 'programs': t.programs.values_list('name', flat=True)} for t in tags]
+        # posts = [{'title': p.title, 'body': p.body, 'tags': p.tags.values_list('name', flat=True)} for p in po]
         ctx = {'objects': posts}
-
         return render(request, 'post-list.html', ctx)
 
 
