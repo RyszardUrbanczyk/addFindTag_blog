@@ -1,10 +1,15 @@
 {% block header %}
+
+    <!-- Navigations bar -->
+
     <div class="pb-2 mb-2 border-bottom">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3 rounded ">
             {#  <a class="navbar-brand" href="{% url 'index' %}">Add/Find Tags</a>#}
             {#  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
             {#    <span class="navbar-toggler-icon"></span>#}
             {#  </button>#}
+
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto small">
                     <li class="nav-item">
@@ -12,39 +17,34 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'programs-list' %}">Programy</a>
+                        <a class="nav-link" href="{% url 'tag-list' %}">Programy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add-program' %}">Dodaj program</a>
+                        <a class="nav-link" href="{% url 'add-tag' %}">Dodaj program</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add-tag' %}">Dodaj post</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tags-list' %}">Lista postów</a>
-                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'add-tag' %}">Dodaj post</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'tags-list' %}">Lista postów</a>#}
+{#                    </li>#}
+{##}
+{#                    {% if user.is_authenticated %}#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item nav-link">Witaj {{ user }}#}
+{#                    </li>#}
+{#                    {% else %}#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'login' %}">Loguj</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>#}
+{#                    </li>#}
+{#                    {% endif %}#}
 
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
-                    </li>
-                    <li class="nav-item nav-link">Witaj {{ user }}
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Loguj</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>
-                    </li>
-                    {% endif %}
-                    <!--
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                    -->
                 </ul>
-                <!-- -->
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Search">
                     <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Szukaj</button>
