@@ -8,12 +8,13 @@ from django.contrib.auth.models import User
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
     def get_detail_url(self):
-        return f'/edit_program/{self.id}'
+        return f'/edit-tag/{self.id}'
 
 
 class Post(models.Model):

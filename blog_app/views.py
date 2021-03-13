@@ -17,7 +17,7 @@ class BaseView(View):
         return render(request, 'index.html')
 
 
-class TagsListView(View):
+class TagListView(View):
     """
     View of list tags-programs.
     """
