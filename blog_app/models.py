@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Program(models.Model):
+class Tag(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
 
@@ -16,7 +16,7 @@ class Program(models.Model):
         return f'/edit_program/{self.id}'
 
 
-class Tag(models.Model):
+class Post(models.Model):
     # STATUS_CHOICES = [
     #     ('draft', 'Draft'),
     #     ('published', 'Published')
@@ -26,7 +26,5 @@ class Tag(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     publish = models.DateTimeField(auto_now_add=True)
-    uptated = models.DateTimeField(auto_now=True)
-    programs = models.ManyToManyField(Program)
-
-
+    updated = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField(Tag) # related_name='+'
