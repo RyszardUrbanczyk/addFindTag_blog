@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views import View
 from django.shortcuts import render, redirect, reverse
@@ -38,7 +39,7 @@ class ProgramDetailView(View):
         return render(request, 'program-detail.html', {'object': object, 'x':x})
 
 
-class AddProgramView(CreateView):
+class AddProgramView(LoginRequiredMixin, CreateView):
     """
     In this View is form to adding programs to database.
     """
@@ -68,31 +69,31 @@ class AddPostView(CreateView):
         return ctx
 
 
-class LoginView(View):
-
-    def get(self, request):
-        form = LoginForm()
-        return render(request, 'form.html', {'form': form})
-
-    def post(self, request):
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(request, **form.cleaned_data)
-            if user is not None:
-                login(request, user)
-                redirect_url = request.GET.get('next', 'index')
-                # próbujemy pobrać ze słownika request.GET wartość która znajduje sie pod kluczem "next" jesli nie ma 'next'
-                # to zwracamy "index"
-                return redirect(redirect_url)
-            else:
-                return redirect('login')
-
-
-class LogOutView(View):
-
-    def get(self, request):
-        logout(request)
-        return redirect('index')
+# class LoginView(View):
+#
+#     def get(self, request):
+#         form = LoginForm()
+#         return render(request, 'form.html', {'form': form})
+#
+#     def post(self, request):
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             user = authenticate(request, **form.cleaned_data)
+#             if user is not None:
+#                 login(request, user)
+#                 redirect_url = request.GET.get('next', 'index')
+#                 # próbujemy pobrać ze słownika request.GET wartość która znajduje sie pod kluczem "next" jesli nie ma 'next'
+#                 # to zwracamy "index"
+#                 return redirect(redirect_url)
+#             else:
+#                 return redirect('login')
+#
+#
+# class LogOutView(View):
+#
+#     def get(self, request):
+#         logout(request)
+#         return redirect('index')
 
 
 class RegisterView(View):
