@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Tag(models.Model):
+class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
@@ -17,7 +17,7 @@ class Tag(models.Model):
 
 
     def get_detail_url(self):
-        return f'/tag-detail/{self.id}'
+        return f'/program-detail/{self.id}'
 
 
 class Post(models.Model):
@@ -31,5 +31,5 @@ class Post(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag)  # related_name='+'
+    programs = models.ManyToManyField(Program)  # related_name='+'
 

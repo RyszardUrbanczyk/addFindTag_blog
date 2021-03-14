@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
 from blog_app.forms import AddPostForm, LoginForm, RegisterForm
 
-from blog_app.models import Tag, Post
+from blog_app.models import Program, Post
 
 
 # Create your views here.
@@ -20,39 +20,39 @@ class BaseView(View):
         return render(request, 'index.html')
 
 
-class TagListView(View):
+class ProgramListView(View):
     """
-    View of list tags-programs.
+    View of list programs.
     """
 
     def get(self, request):
-        ctx = {'objects': Tag.objects.all().order_by('name')}
-        return render(request, 'tag-list.html', ctx)
+        ctx = {'objects': Program.objects.all().order_by('name')}
+        return render(request, 'program-list.html', ctx)
 
 
-class TagDetailView(View):
+class ProgramDetailView(View):
 
     def get(self, request, id):
-        object = Tag.objects.get(id=id)
+        object = Program.objects.get(id=id)
         x = object.post_set.all()
-        return render(request, 'tag-detail.html', {'object': object, 'x':x})
+        return render(request, 'program-detail.html', {'object': object, 'x':x})
 
 
-class AddTagView(CreateView):
+class AddProgramView(CreateView):
     """
-    In this View is form to adding tags to database.
+    In this View is form to adding programs to database.
     """
     template_name = 'add-program.html'
-    model = Tag
+    model = Program
     fields = '__all__'
-    success_url = '/tag-list/'
+    success_url = '/program-list/'
 
 
 class PostListView(View):
 
     def get(self, request):
         posts = Post.objects.all()
-        # posts = [{'title': p.title, 'body': p.body, 'tags': p.tags.values_list('name', flat=True)} for p in po]
+        # posts = [{'title': p.title, 'body': p.body, 'programs': p.programs.values_list('name', flat=True)} for p in po]
         ctx = {'objects': posts}
         return render(request, 'post-list.html', ctx)
 

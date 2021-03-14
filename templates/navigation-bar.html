@@ -17,17 +17,17 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'tag-list' %}">Programy</a>
+                        <a class="nav-link" href="{% url 'program-list' %}">Programy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add-tag' %}">Dodaj program</a>
+                        <a class="nav-link" href="{% url 'add-program' %}">Dodaj program</a>
                     </li>
 {#                    <li class="nav-item">#}
 {#                        <a class="nav-link" href="{% url 'post-list' %}">Posty</a>#}
 {#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="{% url 'add-post' %}">Dodaj posta</a>#}
-{#                    </li>#}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add-post' %}">Dodaj posta</a>
+                    </li>
 {##}
                     {% if user.is_authenticated %}
                     <li class="nav-item">
