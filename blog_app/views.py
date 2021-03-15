@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
 from blog_app.forms import AddPostForm, LoginForm, RegisterForm
 
-from blog_app.models import Program, Post
+from blog_app.models import Program, Post, Tag
 
 
 # Create your views here.
@@ -35,8 +35,10 @@ class ProgramDetailView(View):
 
     def get(self, request, id):
         object = Program.objects.get(id=id)
-        x = object.post_set.all()
-        return render(request, 'program-detail.html', {'object': object, 'x':x})
+        posts = object.post_set.all()
+        tags = object.tags.all()
+
+        return render(request, 'program-detail.html', {'object': object, 'posts':posts, 'tags':tags})
 
 
 class AddProgramView(LoginRequiredMixin, CreateView):
@@ -58,7 +60,7 @@ class PostListView(View):
         return render(request, 'post-list.html', ctx)
 
 
-class AddPostView(CreateView):
+class AddPostView(LoginRequiredMixin, CreateView):
     template_name = 'add-post.html'
     model = Post
     fields = '__all__'
@@ -67,33 +69,6 @@ class AddPostView(CreateView):
     def get_context_data(self, **kwargs):
         ctx = {'form': AddPostForm()}
         return ctx
-
-
-# class LoginView(View):
-#
-#     def get(self, request):
-#         form = LoginForm()
-#         return render(request, 'form.html', {'form': form})
-#
-#     def post(self, request):
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             user = authenticate(request, **form.cleaned_data)
-#             if user is not None:
-#                 login(request, user)
-#                 redirect_url = request.GET.get('next', 'index')
-#                 # próbujemy pobrać ze słownika request.GET wartość która znajduje sie pod kluczem "next" jesli nie ma 'next'
-#                 # to zwracamy "index"
-#                 return redirect(redirect_url)
-#             else:
-#                 return redirect('login')
-#
-#
-# class LogOutView(View):
-#
-#     def get(self, request):
-#         logout(request)
-#         return redirect('index')
 
 
 class RegisterView(View):

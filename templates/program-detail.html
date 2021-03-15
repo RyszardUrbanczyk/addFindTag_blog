@@ -6,21 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    {% for i in x %}
+    {% for post in posts %}
         <div class="card-mb-3">
             <h4 class="card-header">{{ i.title }}
                 <small>
-                    {{ i.publish|date:'s M y H:i' }} &mdash;
+                    {{ post.publish|date:'s M y H:i' }} &mdash;
                     <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
                 </small>
             </h4>
             <div class="card-body">
-                {{ i.body }}
+                {{ post.body }}
             </div>
         </div>
     {% empty %}
         <div class="card-body">
             Nie ma jeszcze wpisów.
         </div>
+    {% endfor %}
+    {% for tag in tags%}
+    {{ tag.name }}
+        {% empty %}
+        Nie ma tagów
     {% endfor %}
 {% endblock %}

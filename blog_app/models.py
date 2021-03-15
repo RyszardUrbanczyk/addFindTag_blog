@@ -13,7 +13,7 @@ class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, related_name='programs')
 
     def __str__(self):
         return f'{self.name}'
