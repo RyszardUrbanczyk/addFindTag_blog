@@ -1,41 +1,39 @@
 {% extends 'base.html' %}
 
 {% block page_header %}
-    <h2>{{ object.name }}</h2>
+    <h2>{{ program.name }}</h2>
     <small><a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a></small>
-    <p class="text-left text-black-50 mb-5">{{ object.description }}</p>
+    <p class="text-left text-black-50 mb-5">{{ program.description }}</p>
 
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-8">
-            {% for post in posts %}
-                <div class="card-mb-3">
-                    <h4 class="card-header">{{ post.title }}
-                        <small>
-                            {{ post.publish|date:'s M y H:i' }} &mdash;
-                            <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
-                        </small>
-                    </h4>
-                    <div class="card-body">
-                        {{ post.body }}
-                    </div>
-                </div>
-            {% empty %}
-                <div class="card-body">
-                    Nie ma jeszcze wpisów ffff.
-                </div>
-            {% endfor %}
-        </div>
 
-        <div class="col-4">
-            {% for tag in tags %}
-                {{ tag.name }}
-            {% empty %}
-                Nie ma tagów
-            {% endfor %}
+    {% for post in posts %}
+        <div class="card-mb-3">
+            <h4 class="card-header">{{ post.title }}
+                <small>
+                    {{ post.publish|date:'s M y H:i' }} &mdash;
+                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
+                    <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a>
+                </small>
+            </h4>
+            <div class="card-body">
+                {{ post.body }}
+                <div class="card-body">
+                    {% for comment in post.comment_set.all %}
+                        {{ comment.name }}<br>
+                        {{ comment.body }}<br>
+                    {% empty %}
+                        Nie ma komenatzry
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
+    {% empty %}
+        <div class="card-body">
+            Nie ma jeszcze wpisów.
+        </div>
+    {% endfor %}
 
 {% endblock %}

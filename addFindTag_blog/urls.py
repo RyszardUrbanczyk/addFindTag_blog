@@ -27,8 +27,9 @@ urlpatterns = [
     # path('logout/', views.LogOutView.as_view(), name='logout'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('program-list/', views.ProgramListView.as_view(), name='program-list'),
-    path('program-detail/<int:id>', views.ProgramDetailView.as_view(), name='program-detail'),
+    path('program-detail/<int:pk>/', views.ProgramDetailView.as_view(), name='program-detail'),
     path('add-program/', views.AddProgramView.as_view(), name='add-program'),
     path('post-list/', views.PostListView.as_view(), name='post-list'),
     path('add-post/', views.AddPostView.as_view(), name='add-post'),
+    path('add-comment/<int:id>/', views.AddCommentView.as_view(), name='add-comment'),
 ]

@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
 from blog_app.forms import AddPostForm, LoginForm, RegisterForm
 
-from blog_app.models import Program, Post, Tag
+from blog_app.models import Program, Post, Tag, Comment
 
 
 # Create your views here.
@@ -33,12 +33,17 @@ class ProgramListView(View):
 
 class ProgramDetailView(View):
 
-    def get(self, request, id):
-        object = Program.objects.get(id=id)
-        posts = object.post_set.all()
-        tags = object.tag_set.all()
+    def get(self, request, pk):
+        program = Program.objects.get(pk=pk)
+        posts = program.post_set.all()
+        # post = program.post_set.all().first()
+        # comments = post.comment_set.all()
+        # tags = program.tag_set.all()
+        ctx = {'program': program,
+               'posts': posts,
+               }
 
-        return render(request, 'program-detail.html', {'object': object, 'posts':posts, 'tags':tags})
+        return render(request, 'program-detail.html', ctx)
 
 
 class AddProgramView(LoginRequiredMixin, CreateView):
@@ -64,7 +69,7 @@ class AddPostView(LoginRequiredMixin, CreateView):
     template_name = 'add-post.html'
     model = Post
     fields = '__all__'
-    success_url = '/post-list/'
+    success_url = '/program-list/'
 
     def get_context_data(self, **kwargs):
         ctx = {'form': AddPostForm()}
@@ -87,3 +92,18 @@ class RegisterView(View):
             return redirect('login')
         else:
             return render(request, 'form.html', {'form': form})
+
+
+class AddCommentView(View):
+
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        comments = post.comment_set.all()
+        return render(request, 'add-comment.html', {'post': post, 'comments':comments})
+
+    def post(self, request, id):
+        post_id = Post.objects.get(id=id)
+        name = request.POST['name']
+        body = request.POST['body']
+        comment = Comment.objects.create(name=name, body=body, post=post_id)
+        return redirect(reverse('program-list'))

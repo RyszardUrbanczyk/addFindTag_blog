@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <form method="post">
+        <div class="form-group">
+            {% csrf_token %}
+            <input class="form-control mb-2" type="text" name="name" placeholder="Title">
+            <input class="form-control mb-2" type="text" name="body">
+            <button type="submit" class="btn btn-primary">Wyślij</button>
+{#            <input type="submit">#}
+        </div>
+    </form>
+    <p>Lista komentarzy</p>
+    {% for comment in comments %}
+        <p>{{ comment.created }}<br>
+            {{ comment.name }}<br>
+            {{ comment.body }}<br>
+        </p>
+    {% empty %}
+        <p>Nie ma komentarzy</p>
+    {% endfor %}
+{% endblock %}
