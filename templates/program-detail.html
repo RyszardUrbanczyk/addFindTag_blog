@@ -2,30 +2,40 @@
 
 {% block page_header %}
     <h2>{{ object.name }}</h2>
+    <small><a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a></small>
     <p class="text-left text-black-50 mb-5">{{ object.description }}</p>
+
 {% endblock %}
 
 {% block content %}
-    {% for post in posts %}
-        <div class="card-mb-3">
-            <h4 class="card-header">{{ i.title }}
-                <small>
-                    {{ post.publish|date:'s M y H:i' }} &mdash;
-                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
-                </small>
-            </h4>
-            <div class="card-body">
-                {{ post.body }}
-            </div>
+    <div class="row">
+        <div class="col-8">
+            {% for post in posts %}
+                <div class="card-mb-3">
+                    <h4 class="card-header">{{ post.title }}
+                        <small>
+                            {{ post.publish|date:'s M y H:i' }} &mdash;
+                            <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
+                        </small>
+                    </h4>
+                    <div class="card-body">
+                        {{ post.body }}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="card-body">
+                    Nie ma jeszcze wpisów ffff.
+                </div>
+            {% endfor %}
         </div>
-    {% empty %}
-        <div class="card-body">
-            Nie ma jeszcze wpisów.
+
+        <div class="col-4">
+            {% for tag in tags %}
+                {{ tag.name }}
+            {% empty %}
+                Nie ma tagów
+            {% endfor %}
         </div>
-    {% endfor %}
-    {% for tag in tags%}
-    {{ tag.name }}
-        {% empty %}
-        Nie ma tagów
-    {% endfor %}
+    </div>
+
 {% endblock %}

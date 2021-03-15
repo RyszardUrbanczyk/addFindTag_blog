@@ -36,7 +36,7 @@ class ProgramDetailView(View):
     def get(self, request, id):
         object = Program.objects.get(id=id)
         posts = object.post_set.all()
-        tags = object.tags.all()
+        tags = object.tag_set.all()
 
         return render(request, 'program-detail.html', {'object': object, 'posts':posts, 'tags':tags})
 

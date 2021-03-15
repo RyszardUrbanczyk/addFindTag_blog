@@ -6,20 +6,26 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Tag(models.Model):
-    name = models.CharField(max_length=200)
 
 class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, related_name='programs')
+    # tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return f'{self.name}'
 
     def get_detail_url(self):
         return f'/program-detail/{self.id}'
+
+class Tag(models.Model):
+    name = models.CharField(max_length=200)
+    progrms = models.ManyToManyField(Program)
+
+    def __str__(self):
+        return self.name
+
 
 
 class Post(models.Model):
