@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'addFindTag_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'add_find_tag',
+        'NAME': 'addfindtag',
         'HOST': 'localhost',
         'USER': 'ryszardurbanczyk',
         'PASSWORD': '',
