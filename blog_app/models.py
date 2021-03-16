@@ -49,8 +49,9 @@ class Post(models.Model):
     def get_detail_url(self):
         return f'/add-comment/{self.id}'
 
+
 class Comment(models.Model):
-    name = models.CharField(max_length=200, validators=[check_length])
+    name = models.CharField(max_length=200)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

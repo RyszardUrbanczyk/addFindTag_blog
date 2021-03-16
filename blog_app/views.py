@@ -94,34 +94,34 @@ class RegisterView(View):
             return render(request, 'form.html', {'form': form})
 
 
-# 1 wersja
-class AddCommentView(View):
-
-    def get(self, request, id):
-        post = Post.objects.get(id=id)
-        comments = post.comment_set.all()
-        return render(request, 'add-comment.html', {'post': post, 'comments':comments})
-
-    def post(self, request, id):
-        post_id = Post.objects.get(id=id)
-        name = request.POST['name']
-        body = request.POST['body']
-        comment = Comment.objects.create(name=name, body=body, post=post_id)
-        return redirect(reverse('program-list'))
-
-# 2 wersja nie działa
+# 1 wersja działa
 # class AddCommentView(View):
 #
 #     def get(self, request, id):
-#         form = AddCommentForm()
 #         post = Post.objects.get(id=id)
-#         comments = post.comment_set.all()
-#         return render(request, 'add-comment.html', {'post': post, 'comments':comments, 'form': form})
+#         # comments = post.comment_set.all()
+#         return render(request, 'add-comment.html', {'post': post})
 #
 #     def post(self, request, id):
-#         form = AddCommentForm(request.POST)
-#         p = Comment.objects.all()
-#         if form.is_valid():
-#             p = form.save()
-#             return redirect('program-list')
-#         return render(request, 'add-comment.html', {'form': form})
+#         post_id = Post.objects.get(id=id)
+#         name = request.POST['name']
+#         body = request.POST['body']
+#         comment = Comment.objects.create(name=name, body=body, post=post_id)
+#         return redirect(reverse('program-list'))
+
+# 2 wersja działa
+class AddCommentView(View):
+
+    def get(self, request, id):
+        form = AddCommentForm()
+        return render(request, 'add-comment.html', {'form': form})
+
+    def post(self, request, id):
+        form = AddCommentForm(request.POST)
+        post_id = Post.objects.get(id=id)
+        # p = Comment.objects.all()
+        if form.is_valid():
+            # p = form.save(post_id)
+            Comment.objects.create(**form.cleaned_data, post=post_id)
+            return redirect('program-list')
+        return render(request, 'add-comment.html', {'form': form})
