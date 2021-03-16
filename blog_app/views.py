@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
-from blog_app.forms import AddPostForm, LoginForm, RegisterForm
+from blog_app.forms import AddPostForm, LoginForm, RegisterForm, AddCommentForm
 
 from blog_app.models import Program, Post, Tag, Comment
 
@@ -94,6 +94,7 @@ class RegisterView(View):
             return render(request, 'form.html', {'form': form})
 
 
+# 1 wersja
 class AddCommentView(View):
 
     def get(self, request, id):
@@ -107,3 +108,20 @@ class AddCommentView(View):
         body = request.POST['body']
         comment = Comment.objects.create(name=name, body=body, post=post_id)
         return redirect(reverse('program-list'))
+
+# 2 wersja nie działa
+# class AddCommentView(View):
+#
+#     def get(self, request, id):
+#         form = AddCommentForm()
+#         post = Post.objects.get(id=id)
+#         comments = post.comment_set.all()
+#         return render(request, 'add-comment.html', {'post': post, 'comments':comments, 'form': form})
+#
+#     def post(self, request, id):
+#         form = AddCommentForm(request.POST)
+#         p = Comment.objects.all()
+#         if form.is_valid():
+#             p = form.save()
+#             return redirect('program-list')
+#         return render(request, 'add-comment.html', {'form': form})

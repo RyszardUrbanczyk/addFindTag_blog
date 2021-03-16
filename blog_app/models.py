@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from blog_app.validators import check_length
 
 # from django.utils import timezone
 
@@ -50,7 +50,7 @@ class Post(models.Model):
         return f'/add-comment/{self.id}'
 
 class Comment(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, validators=[check_length])
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

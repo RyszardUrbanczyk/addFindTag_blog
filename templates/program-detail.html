@@ -2,7 +2,7 @@
 
 {% block page_header %}
     <h2>{{ program.name }}</h2>
-    <small><a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a></small>
+    <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>
     <p class="text-left text-black-50 mb-5">{{ program.description }}</p>
 
 {% endblock %}
@@ -14,19 +14,24 @@
             <h4 class="card-header">{{ post.title }}
                 <small>
                     {{ post.publish|date:'s M y H:i' }} &mdash;
-                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>
+{#                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>#}
                     <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a>
                 </small>
             </h4>
             <div class="card-body">
                 {{ post.body }}
                 <div class="card-body">
+                <small>
                     {% for comment in post.comment_set.all %}
                         {{ comment.name }}<br>
                         {{ comment.body }}<br>
+                        <hr>
                     {% empty %}
-                        Nie ma komenatzry
+                        Nie ma komentarzy!
                     {% endfor %}
+
+                </small>
+
                 </div>
             </div>
         </div>

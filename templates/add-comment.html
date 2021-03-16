@@ -10,13 +10,25 @@
 {#            <input type="submit">#}
         </div>
     </form>
-    <p>Lista komentarzy</p>
-    {% for comment in comments %}
-        <p>{{ comment.created }}<br>
-            {{ comment.name }}<br>
-            {{ comment.body }}<br>
-        </p>
-    {% empty %}
-        <p>Nie ma komentarzy</p>
-    {% endfor %}
+{#    <p>Lista komentarzy</p>#}
+{#    {% for comment in comments %}#}
+{#        <p>{{ comment.created }}<br>#}
+{#            {{ comment.name }}<br>#}
+{#            {{ comment.body }}<br>#}
+{#        </p>#}
+{#    {% empty %}#}
+{#        <p>Nie ma komentarzy</p>#}
+{#    {% endfor %}#}
 {% endblock %}
+
+{#{% extends 'base.html' %}#}
+{#{% load bootstrap4 %}#}
+{#{% block content %}#}
+{#    <form method="post">#}
+{#        {% csrf_token %}#}
+{#        {% bootstrap_form form %}#}
+{#        {{ form.as_p }}#}
+{#        <input type="submit">#}
+{#    </form>#}
+{#{% endblock %}#}
+
