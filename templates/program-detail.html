@@ -4,11 +4,9 @@
     <h2>{{ program.name }}</h2>
     <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>
     <p class="text-left text-black-50 mb-5">{{ program.description }}</p>
-
 {% endblock %}
 
 {% block content %}
-
     {% for post in posts %}
         <div class="card-mb-3">
             <h5 class="card-header">{{ post.title }}
@@ -29,9 +27,7 @@
                     {% empty %}
                         Nie ma komentarzy!
                     {% endfor %}
-
                 </small>
-
                 </div>
             </div>
         </div>
@@ -40,5 +36,4 @@
             Nie ma jeszcze wpisów.
         </div>
     {% endfor %}
-
 {% endblock %}
