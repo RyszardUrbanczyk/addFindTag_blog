@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
-from blog_app.forms import AddPostForm, LoginForm, RegisterForm, AddCommentForm
+from blog_app.forms import AddPostForm, LoginForm, RegisterForm, AddCommentForm, AddTagForm
 
 from blog_app.models import Program, Post, Tag, Comment
 
@@ -36,11 +36,10 @@ class ProgramDetailView(View):
     def get(self, request, pk):
         program = Program.objects.get(pk=pk)
         posts = program.post_set.all()
-        # post = program.post_set.all().first()
-        # comments = post.comment_set.all()
-        # tags = program.tag_set.all()
+        tags = program.tag_set.all()
         ctx = {'program': program,
                'posts': posts,
+               'tags':tags
                }
 
         return render(request, 'program-detail.html', ctx)
@@ -119,9 +118,26 @@ class AddCommentView(View):
     def post(self, request, id):
         form = AddCommentForm(request.POST)
         post_id = Post.objects.get(id=id)
-        # p = Comment.objects.all()
         if form.is_valid():
-            # p = form.save(post_id)
             Comment.objects.create(**form.cleaned_data, post=post_id)
             return redirect('program-list')
         return render(request, 'add-comment.html', {'form': form})
+
+
+class AddTag(CreateView):
+    template_name = 'add-tag.html'
+    model = Tag
+    fields = "__all__"
+    success_url = '/program-list/'
+
+# class AddTag(View):
+# def get(self, request):
+    #     form = AddTagForm()
+    #     return render(request, 'add-tag.html', {'form':form})
+    #
+    # def post(self, request):
+    #     form = AddTagForm(request.POST)
+    #     if form.is_valid():
+    #         p = form.save()
+    #         redirect('program-list')
+    #     return render(request, 'add-tag.html', {'form':form})

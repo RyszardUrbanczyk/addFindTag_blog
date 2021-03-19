@@ -1,17 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
-from blog_app.validators import check_length
+# from django.utils import timezone
+from datetime import timezone
+
 
 # from django.utils import timezone
 
 # Create your models here.
 
 
+
+
+
 class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    # tags = models.ManyToManyField(Tag)
+
 
     def __str__(self):
         return f'{self.name}'
@@ -19,14 +24,12 @@ class Program(models.Model):
     def get_detail_url(self):
         return f'/program-detail/{self.id}'
 
-
 class Tag(models.Model):
     name = models.CharField(max_length=200)
-    tags = models.ManyToManyField(Program)
+    aplications = models.ManyToManyField(Program)
 
     def __str__(self):
         return self.name
-
 
 
 class Post(models.Model):
@@ -43,7 +46,6 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     programs = models.ForeignKey(Program, on_delete=models.CASCADE)  # related_name='+'
 
-
     def __str__(self):
         return f'{self.title}'
 
@@ -56,4 +58,3 @@ class Comment(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-

@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'addFindTag_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'add_find_tag',
+        'NAME': 'addfindtag',
         'HOST': 'localhost',
         'USER': 'ryszardurbanczyk',
         'PASSWORD': '',
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-en'
 
 TIME_ZONE = 'UTC'
 

@@ -3,12 +3,19 @@
 {% block page_header %}
     <h2>{{ program.name }}</h2>
     <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>
-    <p class="text-left text-black-50 mb-5">{{ program.description }}</p>
+    <p class="text-left text-black-50 mb-2">{{ program.description }}</p>
+    <small>Tagi:
+        {% for tag in tags %}
+            {{ tag.name }}
+        {% empty %}
+            Nie ma tagów.
+        {% endfor %}
+    </small>
 {% endblock %}
 
 {% block content %}
     {% for post in posts %}
-        <div class="card-mb-3">
+        <div class="card-mb-3 mt-4">
             <h5 class="card-header">{{ post.title }}
                 <small>
                     {{ post.publish|date:'d.m.Y H:i' }} &mdash;
@@ -17,10 +24,10 @@
                 </small>
             </h5>
             <div class="card-body">
-                {{ post.body}}<br><br>
-            {% if post.body_image %}
-                <img src="{{ post.body_image.url }}" width="350">
-            {% endif %}
+                {{ post.body }}<br><br>
+                {% if post.body_image %}
+                    <img src="{{ post.body_image.url }}" width="350">
+                {% endif %}
                 <div class="card-body">
                     <small>
                         {% for comment in post.comment_set.all %}
