@@ -10,7 +10,7 @@ from datetime import timezone
 
 
 
-
+# verbose_name='Nazwa kategorii'
 
 class Program(models.Model):
     name = models.CharField(max_length=50)
@@ -39,7 +39,7 @@ class Post(models.Model):
     # ]
 
     title = models.CharField(max_length=120)
-    # author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     body_image = models.ImageField(null=True, blank=True, upload_to='images/')
     publish = models.DateTimeField(auto_now_add=True)
