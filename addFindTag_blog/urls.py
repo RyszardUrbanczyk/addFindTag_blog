@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from blog_app import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +35,4 @@ urlpatterns = [
     path('post-list/', views.PostListView.as_view(), name='post-list'),
     path('add-post/', views.AddPostView.as_view(), name='add-post'),
     path('add-comment/<int:id>/', views.AddCommentView.as_view(), name='add-comment'),
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

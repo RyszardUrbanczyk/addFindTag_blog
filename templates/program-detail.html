@@ -12,22 +12,25 @@
             <h5 class="card-header">{{ post.title }}
                 <small>
                     {{ post.publish|date:'d.m.Y H:i' }} &mdash;
-{#                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>#}
+                    {#                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>#}
                     <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a>
                 </small>
             </h5>
             <div class="card-body">
-                {{ post.body }}
+                {{ post.body}}<br><br>
+            {% if post.body_image %}
+                <img src="{{ post.body_image.url }}" width="350">
+            {% endif %}
                 <div class="card-body">
-                <small>
-                    {% for comment in post.comment_set.all %}
-                        {{ comment.name }}<br>
-                        {{ comment.body }}<br>
-                        <hr>
-                    {% empty %}
-                        Nie ma komentarzy!
-                    {% endfor %}
-                </small>
+                    <small>
+                        {% for comment in post.comment_set.all %}
+                            {{ comment.name }}<br>
+                            {{ comment.body }}<br>
+                            <hr>
+                        {% empty %}
+                            Nie ma komentarzy!
+                        {% endfor %}
+                    </small>
                 </div>
             </div>
         </div>

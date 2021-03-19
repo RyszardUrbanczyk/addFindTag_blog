@@ -5,8 +5,12 @@ from blog_app.models import Program, Post, Tag, Comment
 
 
 class AddPostForm(forms.ModelForm):
+    # programs = forms.ModelChoiceField(queryset=Program.objects.order_by('name'),
+    #                                           widget=forms.CheckboxSelectMultiple)
+    # programs = forms.ModelChoiceField(queryset=Program.objects.order_by('name'),
+    #                                           widget=forms.CheckboxSelectMultiple)
     programs = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
-                                              widget=forms.CheckboxSelectMultiple)
+                                 widget=forms.RadioSelect)
 
     class Meta:
         model = Post
