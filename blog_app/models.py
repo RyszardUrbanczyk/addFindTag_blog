@@ -24,6 +24,7 @@ class Program(models.Model):
     def get_detail_url(self):
         return f'/program-detail/{self.id}'
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=200)
     aplications = models.ManyToManyField(Program)

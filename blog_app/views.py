@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.views import View
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import CreateView
@@ -31,7 +32,7 @@ class ProgramListView(View):
         return render(request, 'program-list.html', ctx)
 
 
-class ProgramDetailView(View):
+class ProgramDetailView(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         program = Program.objects.get(pk=pk)
@@ -55,24 +56,27 @@ class AddProgramView(LoginRequiredMixin, CreateView):
     success_url = '/program-list/'
 
 
-class PostListView(View):
-
-    def get(self, request):
-        posts = Post.objects.all()
-        # posts = [{'title': p.title, 'body': p.body, 'programs': p.programs.values_list('name', flat=True)} for p in po]
-        ctx = {'objects': posts}
-        return render(request, 'post-list.html', ctx)
+# class PostListView(View):
+#
+#     def get(self, request):
+#         posts = Post.objects.all()
+#         # posts = [{'title': p.title, 'body': p.body, 'programs': p.programs.values_list('name', flat=True)} for p in po]
+#         ctx = {'objects': posts}
+#         return render(request, 'post-list.html', ctx)
 
 
 class AddPostView(LoginRequiredMixin, CreateView):
     template_name = 'add-post.html'
-    model = Post
-    fields = '__all__'
+    form_class = AddPostForm
+    # model = Post
+    # fields = '__all__'
     success_url = '/program-list/'
 
-    def get_context_data(self, **kwargs):
-        ctx = {'form': AddPostForm()}
-        return ctx
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+        return redirect(self.success_url)
 
 
 class RegisterView(View):
@@ -109,7 +113,7 @@ class RegisterView(View):
 #         return redirect(reverse('program-list'))
 
 # 2 wersja działa
-class AddCommentView(View):
+class AddCommentView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         form = AddCommentForm()
@@ -124,12 +128,18 @@ class AddCommentView(View):
         return render(request, 'add-comment.html', {'form': form})
 
 
-class AddTag(CreateView):
+class AddTag(LoginRequiredMixin, CreateView):
     template_name = 'add-tag.html'
-    model = Tag
-    fields = "__all__"
+    form_class = AddTagForm
     success_url = '/program-list/'
 
     # def get_context_data(self, **kwargs):
     #     ctx = {'form': AddTagForm()}
     #     return ctx
+
+
+# class AddTag(LoginRequiredMixin, CreateView):
+#     template_name = 'add-tag.html'
+#     model = Tag
+#     fields = '__all__'
+#     success_url = '/program-list/'

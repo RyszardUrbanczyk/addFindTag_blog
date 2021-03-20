@@ -5,12 +5,13 @@ from blog_app.models import Program, Post, Tag, Comment
 
 
 class AddPostForm(forms.ModelForm):
-    programs = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
-                                 widget=forms.RadioSelect)
+    programs = forms.ModelChoiceField(queryset=Program.objects.order_by('name'),
+                                      widget=forms.RadioSelect)
 
     class Meta:
         model = Post
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ['author']
 
 
 class LoginForm(forms.Form):
@@ -37,7 +38,7 @@ class AddCommentForm(forms.ModelForm):
 
 
 class AddTagForm(forms.ModelForm):
-    programs = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
+    programy = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
                                               widget=forms.CheckboxSelectMultiple)
 
     class Meta:
