@@ -1,38 +1,38 @@
 {% extends 'base.html' %}
 
 {% block page_header %}
-    <h2>{{ program.name }}</h2>
+        <small>TAGI:
+            {% for tag in tags %}
+                {{ tag.name }},
+            {% empty %}
+                Nie ma tagów.
+            {% endfor %}
+        </small>
+    <hr style="width:100%; height:1px;border-width:0;color:black;background-color:black;text-align:left;margin-left:0">
+    <h2 class="mt-4">{{ program.name }}</h2>
     <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>
-    <p class="text-left text-black-50 mb-2">{{ program.description }}</p>
-    <hr class="mt-2 mb-2">
-    <small>Tagi:
-        {% for tag in tags %}
-            {{ tag.name }}
-        {% empty %}
-            Nie ma tagów.
-        {% endfor %}
-    </small><hr>
+    <p class="text-left text-black-50 mb-5">{{ program.description }}</p>
 {% endblock %}
 
 {% block content %}
     {% for post in posts %}
-        <div class="card-mb-3 mt-4">
+        <div class="card-mb-3 mb-2">
             <h5 class="card-header">{{ post.title }}
                 <small>
-
                     {{ post.publish|date:'d.m.Y H:i' }} &mdash;
                     {#                    <a href="{% url 'add-post' %}" class="card-link">Dodaj wpis</a>#}
                     <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a>
                 </small>
             </h5>
             <div class="card-body">
-            Autor: {{ post.author }}<br>
+                Autor: {{ post.author }}<br>
                 {{ post.body }}<br><br>
                 {% if post.body_image %}
                     <img src="{{ post.body_image.url }}" width="350">
                 {% endif %}
-                <div class="card-body">
+                <div class="card-body pl-5">
                     <small>
+
                         {% for comment in post.comment_set.all %}
                             {{ comment.name }}<br>
                             {{ comment.body }}<br>
@@ -49,4 +49,7 @@
             Nie ma jeszcze wpisów.
         </div>
     {% endfor %}
+    <hr style="width:100%; height:2px;border-width:0;color:white;background-color:white;text-align:left;margin-left:0">
+    <br><br>
+    {% include 'pagination.html' with page=posts %}
 {% endblock %}

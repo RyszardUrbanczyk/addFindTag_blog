@@ -1,11 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.core import paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
-from django.shortcuts import render, redirect, reverse
-from django.views.generic import CreateView
-from blog_app.forms import AddPostForm, LoginForm, RegisterForm, AddCommentForm, AddTagForm
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView, ListView, DetailView
+from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm
 
 from blog_app.models import Program, Post, Tag, Comment
 
@@ -22,28 +22,68 @@ class BaseView(View):
         return render(request, 'index.html')
 
 
-class ProgramListView(View):
-    """
-    View of list programs.
-    """
+class ProgramListView(ListView):
+    queryset = Program.objects.all()
+    context_object_name = 'objects'
+    paginate_by = 2
+    template_name = 'program-list.html'
 
-    def get(self, request):
-        ctx = {'objects': Program.objects.all().order_by('name')}
-        return render(request, 'program-list.html', ctx)
+
+# class ProgramDetailView(LoginRequiredMixin, View):
+#
+#     def get(self, request, pk):
+#         program = Program.objects.get(pk=pk)
+#         posts = program.post_set.all()
+#         tags = program.tag_set.all()
+#         ctx = {'program': program,
+#                'posts': posts,
+#                'tags': tags
+#                }
+#
+#         return render(request, 'program-detail.html', ctx)
 
 
 class ProgramDetailView(LoginRequiredMixin, View):
 
     def get(self, request, pk):
         program = Program.objects.get(pk=pk)
-        posts = program.post_set.all()
+        posts = program.post_set.all().order_by('-publish')
         tags = program.tag_set.all()
+        paginator = Paginator(posts, 2)
+        page = request.GET.get('page')
+        try:
+            posts = paginator.page(page)
+        except PageNotAnInteger:
+            posts = paginator.page(1)
+        except EmptyPage:
+            posts = paginator.page(paginator.num_pages)
         ctx = {'program': program,
                'posts': posts,
-               'tags':tags
+               'tags': tags
                }
 
         return render(request, 'program-detail.html', ctx)
+
+
+# class PostListView(LoginRequiredMixin, View):
+#
+#     def get(self, request):
+#         objects = Post.objects.all()
+#         paginator = Paginator(objects, 2)
+#         page = request.GET.get('page')
+#         try:
+#             objects = paginator.page(page)
+#         except PageNotAnInteger:
+#             objects = paginator.page(1)
+#         except EmptyPage:
+#             objects = paginator.page(paginator.num_pages)
+#
+#         ctx = {
+#                'page':page,
+#                'objects':objects
+#                }
+#
+#         return render(request, 'post-list.html', ctx)
 
 
 class AddProgramView(LoginRequiredMixin, CreateView):
@@ -68,8 +108,6 @@ class AddProgramView(LoginRequiredMixin, CreateView):
 class AddPostView(LoginRequiredMixin, CreateView):
     template_name = 'add-post.html'
     form_class = AddPostForm
-    # model = Post
-    # fields = '__all__'
     success_url = '/program-list/'
 
     def form_valid(self, form):
@@ -130,16 +168,10 @@ class AddCommentView(LoginRequiredMixin, View):
 
 class AddTag(LoginRequiredMixin, CreateView):
     template_name = 'add-tag.html'
-    form_class = AddTagForm
+    model = Tag
+    fields = '__all__'
     success_url = '/program-list/'
 
-    # def get_context_data(self, **kwargs):
-    #     ctx = {'form': AddTagForm()}
-    #     return ctx
-
-
-# class AddTag(LoginRequiredMixin, CreateView):
-#     template_name = 'add-tag.html'
-#     model = Tag
-#     fields = '__all__'
-#     success_url = '/program-list/'
+    def get_context_data(self, **kwargs):
+        ctx = {'form': AddTagForm()}
+        return ctx

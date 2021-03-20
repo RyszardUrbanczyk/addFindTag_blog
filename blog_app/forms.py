@@ -38,10 +38,9 @@ class AddCommentForm(forms.ModelForm):
 
 
 class AddTagForm(forms.ModelForm):
-    programy = forms.ModelMultipleChoiceField(queryset=Program.objects.order_by('name'),
+    aplications = forms.ModelMultipleChoiceField(queryset=Program.objects.all(),
                                               widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Tag
-        # fields = '__all__'
-        exclude = ['aplications']
+        fields = '__all__'
