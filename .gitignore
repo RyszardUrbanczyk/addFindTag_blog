@@ -153,3 +153,5 @@ fabric.properties
 db.sqlite3
 
 notatnik.py
+
+media/
