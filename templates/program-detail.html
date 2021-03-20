@@ -4,13 +4,14 @@
     <h2>{{ program.name }}</h2>
     <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>
     <p class="text-left text-black-50 mb-2">{{ program.description }}</p>
+    <hr class="mt-2 mb-2">
     <small>Tagi:
         {% for tag in tags %}
             {{ tag.name }}
         {% empty %}
             Nie ma tagów.
         {% endfor %}
-    </small>
+    </small><hr>
 {% endblock %}
 
 {% block content %}

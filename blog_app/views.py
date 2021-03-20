@@ -130,14 +130,6 @@ class AddTag(CreateView):
     fields = "__all__"
     success_url = '/program-list/'
 
-# class AddTag(View):
-# def get(self, request):
-    #     form = AddTagForm()
-    #     return render(request, 'add-tag.html', {'form':form})
-    #
-    # def post(self, request):
-    #     form = AddTagForm(request.POST)
-    #     if form.is_valid():
-    #         p = form.save()
-    #         redirect('program-list')
-    #     return render(request, 'add-tag.html', {'form':form})
+    # def get_context_data(self, **kwargs):
+    #     ctx = {'form': AddTagForm()}
+    #     return ctx

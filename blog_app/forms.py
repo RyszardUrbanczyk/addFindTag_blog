@@ -42,4 +42,5 @@ class AddTagForm(forms.ModelForm):
 
     class Meta:
         model = Tag
+        # fields = '__all__'
         exclude = ['aplications']
