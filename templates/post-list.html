@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for obj in objects %}
-    {{ obj.title }} | {{ obj.body }} | <hr>
-{% empty %}
-Pusto
-{% endfor %}
-{% include 'pagination.html' with page=objects %}
+    {% for obj in objects %}
+        {{ obj.title }} | {{ obj.body }}|
+        <hr>
+    {% empty %}
+        Pusto
+    {% endfor %}
+    {% include 'pagination.html' with page=objects %}
 {% endblock %}

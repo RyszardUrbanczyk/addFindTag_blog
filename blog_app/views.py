@@ -1,13 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.core import paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView, DetailView
 from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm
 
-from blog_app.models import Program, Post, Tag, Comment
+from blog_app.models import Program, Post, Tag, Comment, Gallery, Image
 
 
 # Create your views here.
@@ -184,3 +183,30 @@ class ListPostLoggedUser(View):
         return render(request, 'list-logged-user.html', {'posts': posts})
 
 
+class AddGalleryView(CreateView):
+    template_name = 'add-gallery.html'
+    model = Gallery
+    fields = '__all__'
+    success_url = '/'
+
+
+class GalleryListView(ListView):
+    queryset = Gallery.objects.all()
+    context_object_name = 'objects'
+    # paginate_by = 2
+    template_name = 'gallery-list.html'
+
+
+class AddImageToGalleryView(CreateView):
+    template_name = 'add-image-to-gallery.html'
+    model = Image
+    fields = '__all__'
+    success_url = '/gallery-list/'
+
+
+class GalleryDetailView(View):
+
+    def get(self, request, id):
+        object = Gallery.objects.get(id=id)
+        images = object.image_set.all()
+        return render(request, 'gallery-detail.html', {'images':images})

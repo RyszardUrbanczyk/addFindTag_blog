@@ -1,22 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from django.utils import timezone
-from datetime import timezone
 
-
-# from django.utils import timezone
 
 # Create your models here.
 
-
-
-# verbose_name='Nazwa kategorii'
 
 class Program(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return f'{self.name}'
@@ -59,3 +51,22 @@ class Comment(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class Gallery(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_detail_url(self):
+        return f'/gallery-detail/{self.id}'
+
+class Image(models.Model):
+    name = models.CharField(max_length=200, unique=True, null=False)
+    gallery_image = models.ImageField(null=False, blank=True, upload_to='images/')
+    # author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    galleries = models.ForeignKey(Gallery, on_delete=models.CASCADE)

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% for obj in objects %}
+        <div class="card mb-3">
+            <h4 class="card-header">{{ obj.name }}</h4>
+            <div class="card-body">
+                <p class="card-text">{{ obj.description }}</p>
+                <a href="{{ obj.get_detail_url }}" class="card-link">Zobacz galerię</a>
+{#                <a href="{% url 'add-post' %}" class="card-link">Dodaj post</a>#}
+            </div>
+        </div>
+        {% empty %}
+        Nie ma jeszcze żadnej galeri.
+    {% endfor %}
+{% endblock %}

@@ -4,14 +4,8 @@
 
     <div class="pb-2 mb-2 border-bottom">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mt-3 rounded ">
-            {#  <a class="navbar-brand" href="{% url 'index' %}">Add/Find Tags</a>#}
-            {#  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
-            {#    <span class="navbar-toggler-icon"></span>#}
-            {#  </button>#}
-
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto small">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Startowa</a>
                     </li>
@@ -23,34 +17,64 @@
                         <a class="nav-link" href="{% url 'add-program' %}">Dodaj program</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add-tag' %}">Dodaj tag</a>
+                        <a class="nav-link" href="{% url 'gallery-list' %}">Galerie</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'add-post' %}">Dodaj posta</a>
-                    </li>
-{##}
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
-                    </li>
-                    <li class="nav-item nav-link">Witaj {{ user }} &rarr; <a href="{% url 'post-user' %}">Moje posty</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Loguj</a>
+                        <a class="nav-link" href="{% url 'add-gallery' %}">Dodaj galerię</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>
+                        <a class="nav-link" href="{% url 'add-image' %}">Dodaj obrazek</a>
                     </li>
-                    {% endif %}
+                    {#                    {% if user.is_authenticated %}#}
+                    {#                        <li class="nav-item">#}
+                    {#                            <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>#}
+                    {#                        </li>#}
+                    {#                        <li class="nav-item nav-link">Witaj {{ user }} &rarr; <a href="{% url 'post-user' %}">Moje#}
+                    {#                            posty</a>#}
+                    {#                        </li>#}
+                    {#                    {% else %}#}
+                    {#                        <li class="nav-item">#}
+                    {#                            <a class="nav-link" href="{% url 'login' %}">Loguj</a>#}
+                    {#                        </li>#}
+                    {#                        <li class="nav-item">#}
+                    {#                            <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>#}
+                    {#                        </li>#}
+                    {#                    {% endif %}#}
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Search">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Szukaj</button>
-                </form>
-
+                <!--
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Search">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Szukaj</button>
+                    </form>
+                    -->
             </div>
         </nav>
     </div>
+
+    <!-- ################ second davbar ################ -->
+
+    <ul class="nav justify-content-end mb-2">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add-tag' %}">Dodaj tag</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add-post' %}">Dodaj posta</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
+            </li>
+            <li class="nav-item nav-link">
+                Witaj: {{ user }}  &rarr; <a href="{% url 'post-user' %}">Moje posty</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Loguj</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>
+            </li>
+        {% endif %}
+    </ul>
 {% endblock %}
