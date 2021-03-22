@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <p>Posty użytkownika: {{ user }}</p>
+    <ul class="list-group">
+        {% for post in posts %}
+            <li class="list-group-item mb-1">
+                {{ post.title }}<br>
+                <hr style="width:35%; height:0.5px;background-color:lightgrey;text-align:left;margin-left:0">
+                {{ post.body }}
+            </li>
+        {% endfor %}
+    </ul>
+    {{ message }}
+{% endblock %}

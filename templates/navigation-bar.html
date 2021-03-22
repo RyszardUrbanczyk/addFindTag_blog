@@ -33,7 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
                     </li>
-                    <li class="nav-item nav-link">Witaj {{ user }}
+                    <li class="nav-item nav-link">Witaj {{ user }} &rarr; <a href="{% url 'post-user' %}">Moje posty</a>
                     </li>
                     {% else %}
                     <li class="nav-item">

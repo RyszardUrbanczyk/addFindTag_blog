@@ -36,4 +36,5 @@ urlpatterns = [
     path('add-post/', views.AddPostView.as_view(), name='add-post'),
     path('add-comment/<int:id>/', views.AddCommentView.as_view(), name='add-comment'),
     path('add-tag/', views.AddTag.as_view(), name='add-tag'),
+    path('post-user/', views.ListPostLoggedUser.as_view(), name='post-user'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

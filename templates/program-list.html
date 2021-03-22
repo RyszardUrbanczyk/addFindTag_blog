@@ -3,7 +3,7 @@
 {% block content %}
 
     {% for obj in objects %}
-        <div class="card mb-2">
+        <div class="card mb-3">
             <h4 class="card-header">{{ obj.name }}</h4>
             <div class="card-body">
                 <p class="card-text">{{ obj.description }}</p>
@@ -13,58 +13,30 @@
         </div>
     {% endfor %}
 
-    {#    <div class="pagination">#}
-    {#    <span class="step-links">#}
-    {#        {% if page_obj.has_previous %}#}
-    {#            <a href="?page=1">&laquo; first</a>#}
-    {#            <a href="?page={{ page_obj.previous_page_number }}">previous</a>#}
-    {#        {% endif %}#}
-    {##}
-    {#        <span class="current">#}
-    {#            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
-    {#        </span>#}
-    {##}
-    {#        {% if page_obj.has_next %}#}
-    {#            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>#}
-    {#            <a href="?page={{ page_obj.next_page_number }}">next</a>#}
-    {#        {% endif %}#}
-    {#    </span>#}
-    {#</div>#}
+<!-- PAGINATION -->
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-        {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-            </li>
-        {% endif %}
-{#        <li class="page-item">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</li>#}
-    {% if page_obj.has_next %}
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
-        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-    {% endif %}
-    </ul>
-</nav>
+    <br><br>
+    <hr style="width:100%; height:2px;border-width:0;color:white;background-color:white;text-align:left;margin-left:0">
+    <br><br>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">Pierwsza</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="?page={{ page_obj.previous_page_number }}">Poprzednia</a>
+                </li>
+            {% endif %}
+            &nbsp;
+            <li class="page-item page-link">
+            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}
+        </li>&nbsp;
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Ostatnia</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Nstępna</a></li>
+            {% endif %}
+        </ul>
+    </nav>
 
 {% endblock %}
-
-
-
-
-
-{#<nav aria-label="Page navigation example">#}
-{#    <ul class="pagination">#}
-{#        {% if page_obj.has_previous %}#}
-{#            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>#}
-{#            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>#}
-{#            </li>#}
-{#        {% endif %}#}
-{#        <span class="current">#}
-{#        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
-{#        </span>#}
-{#    {% if page_obj.has_next %}#}
-{#        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>#}
-{#        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>#}
-{#    {% endif %}#}
-{#    </ul>#}
-{#</nav>#}

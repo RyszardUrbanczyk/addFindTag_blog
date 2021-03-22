@@ -1,13 +1,14 @@
-<div class="pagination">
-    <span class="step-links">
+{% load bootstrap4 %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
         {% if page.has_previous %}
-            <a href="?page={{ page.previous_page_number }}">Poprzednia</a>
+            <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}">Poprzednia</a></li>
         {% endif %}
-        <span class="current">
-        Strona {{ page.number }} z {{ page.paginator.num_pages }}
-    </span>
+             &nbsp;<li class="page-item page-link">Strona {{ page.number }} z {{ page.paginator.num_pages }}</li>&nbsp;
         {% if page.has_next %}
-            <a href="?page={{ page.next_page_number }}">Następna</a>
+            <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">Następna</a></li>
         {% endif %}
-    </span>
-</div>
+    </ul>
+</nav>
+
+

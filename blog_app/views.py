@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.core import paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -175,3 +175,12 @@ class AddTag(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         ctx = {'form': AddTagForm()}
         return ctx
+
+
+class ListPostLoggedUser(View):
+
+    def get(self, request):
+        posts = Post.objects.filter(author=request.user)
+        return render(request, 'list-logged-user.html', {'posts': posts})
+
+
