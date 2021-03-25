@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from blog_app.models import Program, Post, Tag, Comment
+from blog_app.models import Program, Post, Tag, Comment, Gallery, Image
 
 
 class AddPostForm(forms.ModelForm):
@@ -10,6 +10,16 @@ class AddPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
+        # fields = '__all__'
+        exclude = ['author']
+
+
+class AddImageForm(forms.ModelForm):
+    galleries = forms.ModelChoiceField(queryset=Gallery.objects.order_by('name'),
+                                      widget=forms.RadioSelect)
+
+    class Meta:
+        model = Image
         # fields = '__all__'
         exclude = ['author']
 

@@ -67,6 +67,6 @@ class Gallery(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=200, unique=True, null=False)
     gallery_image = models.ImageField(null=False, blank=True, upload_to='images/')
-    # author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
-    galleries = models.ForeignKey(Gallery, on_delete=models.CASCADE)
+    galleries = models.ForeignKey(Gallery, on_delete=models.CASCADE, verbose_name='Galerie')

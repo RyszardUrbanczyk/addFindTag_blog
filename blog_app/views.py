@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.urls import reverse
 from django.views import View
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DetailView
-from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm
+from django.views.generic import CreateView, ListView
+from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, AddImageForm
 
 from blog_app.models import Program, Post, Tag, Comment, Gallery, Image
 
@@ -18,13 +19,13 @@ class BaseView(View):
     """
 
     def get(self, request):
-        return render(request, 'index.html')
+        return render(request, 'base.html')
 
 
 class ProgramListView(ListView):
     queryset = Program.objects.all()
     context_object_name = 'objects'
-    paginate_by = 2
+    # paginate_by = 2
     template_name = 'program-list.html'
 
 
@@ -48,7 +49,7 @@ class ProgramDetailView(LoginRequiredMixin, View):
         program = Program.objects.get(pk=pk)
         posts = program.post_set.all().order_by('-publish')
         tags = program.tag_set.all()
-        paginator = Paginator(posts, 2)
+        paginator = Paginator(posts, 3)
         page = request.GET.get('page')
         try:
             posts = paginator.page(page)
@@ -183,11 +184,11 @@ class ListPostLoggedUser(View):
         return render(request, 'list-logged-user.html', {'posts': posts})
 
 
-class AddGalleryView(CreateView):
+class AddGalleryView(LoginRequiredMixin, CreateView):
     template_name = 'add-gallery.html'
     model = Gallery
     fields = '__all__'
-    success_url = '/'
+    success_url = '/gallery-list/'
 
 
 class GalleryListView(ListView):
@@ -197,14 +198,28 @@ class GalleryListView(ListView):
     template_name = 'gallery-list.html'
 
 
-class AddImageToGalleryView(CreateView):
+class AddImageToGalleryView(LoginRequiredMixin, CreateView):
     template_name = 'add-image-to-gallery.html'
-    model = Image
-    fields = '__all__'
-    success_url = '/gallery-list/'
+    form_class = AddImageForm
+    success_url = '/add-image/'
 
 
-class GalleryDetailView(View):
+    def form_valid(self, form):
+        image = form.save(commit=False)
+        image.author = self.request.user
+        image.save()
+        return redirect(self.success_url)
+
+    # def get_context_data(self, **kwargs):
+    #     ctx = super().get_context_data()
+    #     message = f'Dodaj kolejny'
+    #     if self.success_url:
+    #         ctx.update({'message': message})
+    #         return ctx
+
+
+
+class GalleryDetailView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         object = Gallery.objects.get(id=id)

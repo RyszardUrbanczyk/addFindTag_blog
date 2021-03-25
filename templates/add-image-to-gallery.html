@@ -1,3 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
 {% block content %}
-    {% include 'form.html' %}
+    <div class="text-secondary">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button name="submit" class="btn btn-primary">Wyślij</button>
+            {% endbuttons %}
+        </form>
+    </div>
+    {{ message }}
 {% endblock %}
