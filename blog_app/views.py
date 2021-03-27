@@ -201,7 +201,7 @@ class GalleryListView(ListView):
 class AddImageToGalleryView(LoginRequiredMixin, CreateView):
     template_name = 'add-image-to-gallery.html'
     form_class = AddImageForm
-    success_url = '/add-image/'
+    success_url = '/add-image/?success=true'
 
 
     def form_valid(self, form):

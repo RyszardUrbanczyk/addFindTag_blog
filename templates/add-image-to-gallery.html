@@ -11,5 +11,7 @@
             {% endbuttons %}
         </form>
     </div>
-    {{ message }}
+    {% if request.GET.success %}
+    Dodano
+    {%  endif %}
 {% endblock %}

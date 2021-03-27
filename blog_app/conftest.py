@@ -11,12 +11,12 @@ def client():
 
 
 @pytest.fixture
-def programs():
-    programs = []
+def program():
+    program = []
     for x in range(10):
         u = Program.objects.create(name=str(x), description='fajny program')
-        programs.append(u)
-    return programs
+        program.append(u)
+    return program
 
 
 @pytest.fixture
@@ -35,3 +35,13 @@ def galleries():
         g = Gallery.objects.create(name=str(x), description='fajne')
         galleries.append(g)
     return galleries
+
+
+
+@pytest.fixture
+def tags():
+    tags = []
+    for x in range(10):
+        u = Tag.objects.create(name=str(x))
+        tags.append(u)
+    return tags

@@ -48,7 +48,7 @@ class AddCommentForm(forms.ModelForm):
 
 
 class AddTagForm(forms.ModelForm):
-    aplications = forms.ModelMultipleChoiceField(queryset=Program.objects.all(),
+    applications = forms.ModelMultipleChoiceField(queryset=Program.objects.all(),
                                               widget=forms.CheckboxSelectMultiple)
 
     class Meta:

@@ -19,7 +19,7 @@ class Program(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
-    aplications = models.ManyToManyField(Program)
+    applications = models.ManyToManyField(Program)
 
     def __str__(self):
         return self.name
