@@ -63,7 +63,7 @@ def test_add_gallery_user_login(client, users):
 
 
 @pytest.mark.django_db
-def test_program_list_user_not_login(client):
+def test_gallery_list_user_not_login(client):
     response = client.get(reverse('add-gallery'))
     assert response.status_code == 302
 

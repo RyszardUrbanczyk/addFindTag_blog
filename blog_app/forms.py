@@ -16,7 +16,7 @@ class AddPostForm(forms.ModelForm):
 
 class AddImageForm(forms.ModelForm):
     galleries = forms.ModelChoiceField(queryset=Gallery.objects.order_by('name'),
-                                      widget=forms.RadioSelect)
+                                       widget=forms.RadioSelect)
 
     class Meta:
         model = Image
@@ -49,7 +49,7 @@ class AddCommentForm(forms.ModelForm):
 
 class AddTagForm(forms.ModelForm):
     applications = forms.ModelMultipleChoiceField(queryset=Program.objects.all(),
-                                              widget=forms.CheckboxSelectMultiple)
+                                                  widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = Tag

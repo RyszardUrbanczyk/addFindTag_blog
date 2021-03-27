@@ -1,6 +1,6 @@
 import pytest
 from django.test import Client
-from blog_app.models import Program, Tag, Post, Comment, Gallery, Image
+from blog_app.models import Program, Tag, Gallery
 from django.contrib.auth.models import User
 
 
@@ -35,7 +35,6 @@ def galleries():
         g = Gallery.objects.create(name=str(x), description='fajne')
         galleries.append(g)
     return galleries
-
 
 
 @pytest.fixture

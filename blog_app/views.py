@@ -1,13 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.urls import reverse
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
 from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, AddImageForm
 
-from blog_app.models import Program, Post, Tag, Comment, Gallery, Image
+from blog_app.models import Program, Post, Tag, Comment, Gallery
 
 
 # Create your views here.
@@ -100,7 +99,8 @@ class AddProgramView(LoginRequiredMixin, CreateView):
 #
 #     def get(self, request):
 #         posts = Post.objects.all()
-#         # posts = [{'title': p.title, 'body': p.body, 'programs': p.programs.values_list('name', flat=True)} for p in po]
+#         # posts = [{'title': p.title, 'body': p.body,
+#         'programs': p.programs.values_list('name', flat=True)} for p in po]
 #         ctx = {'objects': posts}
 #         return render(request, 'post-list.html', ctx)
 
@@ -203,7 +203,6 @@ class AddImageToGalleryView(LoginRequiredMixin, CreateView):
     form_class = AddImageForm
     success_url = '/add-image/?success=true'
 
-
     def form_valid(self, form):
         image = form.save(commit=False)
         image.author = self.request.user
@@ -218,10 +217,9 @@ class AddImageToGalleryView(LoginRequiredMixin, CreateView):
     #         return ctx
 
 
-
 class GalleryDetailView(LoginRequiredMixin, View):
 
     def get(self, request, id):
         object = Gallery.objects.get(id=id)
         images = object.image_set.all()
-        return render(request, 'gallery-detail.html', {'images':images})
+        return render(request, 'gallery-detail.html', {'images': images})

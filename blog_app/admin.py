@@ -1,5 +1,6 @@
 from django.contrib import admin
 from blog_app.models import Tag, Program, Post, Comment, Gallery, Image
+
 # Register your models here.
 
 admin.site.register(Tag)

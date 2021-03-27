@@ -64,6 +64,7 @@ class Gallery(models.Model):
     def get_detail_url(self):
         return f'/gallery-detail/{self.id}'
 
+
 class Image(models.Model):
     name = models.CharField(max_length=200, unique=True, null=False)
     gallery_image = models.ImageField(null=False, blank=True, upload_to='images/')
