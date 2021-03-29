@@ -1,6 +1,6 @@
 import pytest
 from django.test import Client
-from blog_app.models import Program, Tag, Gallery
+from blog_app.models import Program, Tag, Gallery, Post
 from django.contrib.auth.models import User
 
 
@@ -22,7 +22,7 @@ def program():
 @pytest.fixture
 def users():
     users = []
-    for x in range(1, 11):
+    for x in range(10):
         u = User.objects.create(username=str(x))
         users.append(u)
     return users
@@ -44,3 +44,11 @@ def tags():
         u = Tag.objects.create(name=str(x))
         tags.append(u)
     return tags
+
+@pytest.fixture
+def posts():
+    posts = []
+    for i in range(10):
+        Post.objects.create(title=str(i), author=User.objects.get(id=i),
+                                body='Ale fajny post', programs=Program.objects.get(id=i) )
+    return posts
