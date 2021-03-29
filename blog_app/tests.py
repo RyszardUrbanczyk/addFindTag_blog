@@ -135,8 +135,6 @@ def test_add_post_2_user_login(client, program, users):
     assert Post.objects.all().count() == 1
     Post.objects.get(title=title, author=users[0], body=body, programs=program[0])
 
-
-
 # Nie działa
 # Musi być przesłany id? Jeśli tak jak się to robi?
 # @pytest.mark.django_db

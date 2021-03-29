@@ -45,10 +45,11 @@ def tags():
         tags.append(u)
     return tags
 
+
 @pytest.fixture
 def posts():
     posts = []
     for i in range(10):
         Post.objects.create(title=str(i), author=User.objects.get(id=i),
-                                body='Ale fajny post', programs=Program.objects.get(id=i) )
+                            body='Ale fajny post', programs=Program.objects.get(id=i))
     return posts
