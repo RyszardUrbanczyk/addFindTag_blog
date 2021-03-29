@@ -1,5 +1,3 @@
-from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import reverse
 import pytest
 
@@ -134,10 +132,3 @@ def test_add_post_2_user_login(client, program, users):
 
     assert Post.objects.all().count() == 1
     Post.objects.get(title=title, author=users[0], body=body, programs=program[0])
-
-# Nie działa
-# Musi być przesłany id? Jeśli tak jak się to robi?
-# @pytest.mark.django_db
-# def test_gallery_detail_user_not_login(client):
-#     response = client.get(reverse('gallery-detail/%[id]s/'))
-#     assert response.status_code == 302
