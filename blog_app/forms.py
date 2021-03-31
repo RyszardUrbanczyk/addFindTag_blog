@@ -57,7 +57,6 @@ class AddTagForm(forms.ModelForm):
 
 
 class EditPostForm(forms.ModelForm):
-
     class Meta:
         model = Post
         exclude = ['author', 'body_image', 'programs']
