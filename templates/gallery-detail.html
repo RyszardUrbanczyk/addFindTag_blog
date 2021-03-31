@@ -19,7 +19,9 @@
         {% for obj in images %}
 
             <div class="card">
-                <img class="card-img-top" src="{{ obj.gallery_image.url }}" alt="gggggg">
+                {% if obj.gallery_image %}
+                    <img class="card-img-top" src="{{ obj.gallery_image.url }}" alt="gggggg">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ obj.name }}</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to

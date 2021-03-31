@@ -26,7 +26,8 @@
             </h5>
             <div class="card-body">
                 Autor: {{ post.author }}<br>
-                {{ post.body }}<br><br>
+                {{ post.body }}<br>
+                <small><a href="{{ post.get_detail_url_2 }}" class="card-link">Edytuj wpis</a></small><br><br>
                 {% if post.body_image %}
                     <img src="{{ post.body_image.url }}" width="350" alt="">
                 {% endif %}

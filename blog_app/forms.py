@@ -54,3 +54,11 @@ class AddTagForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = '__all__'
+
+
+class EditPostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        exclude = ['author', 'body_image', 'programs']
+        fields = '__all__'

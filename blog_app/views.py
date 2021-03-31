@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
-from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, AddImageForm
+from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, AddImageForm, EditPostForm
 
 from blog_app.models import Program, Post, Tag, Comment, Gallery
 
@@ -223,3 +223,20 @@ class GalleryDetailView(LoginRequiredMixin, View):
         object = Gallery.objects.get(id=id)
         images = object.image_set.all()
         return render(request, 'gallery-detail.html', {'images': images})
+
+
+class EditPostView(View):
+
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        form = EditPostForm(instance=post)
+        return render(request, 'edit-post.html', {'form': form})
+
+    def post(self, request, id):
+        post = Post.objects.get(id=id)
+        form = EditPostForm(instance=post, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('program-list')
+        return render(request, 'edit-post.html', {'form': form})

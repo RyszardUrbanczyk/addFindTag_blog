@@ -45,6 +45,9 @@ class Post(models.Model):
     def get_detail_url(self):
         return f'/add-comment/{self.id}'
 
+    def get_detail_url_2(self):
+        return f'/edit-post/{self.id}'
+
 
 class Comment(models.Model):
     name = models.CharField(max_length=200)
@@ -63,6 +66,8 @@ class Gallery(models.Model):
 
     def get_detail_url(self):
         return f'/gallery-detail/{self.id}'
+
+
 
 
 class Image(models.Model):
