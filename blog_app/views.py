@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import Http404
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
@@ -228,9 +229,13 @@ class GalleryDetailView(LoginRequiredMixin, View):
 class EditPostView(View):
 
     def get(self, request, id):
+
         post = Post.objects.get(id=id)
-        form = EditPostForm(instance=post)
-        return render(request, 'edit-post.html', {'form': form})
+        if post.author != request.user:
+            raise Http404
+        else:
+            form = EditPostForm(instance=post)
+            return render(request, 'edit-post.html', {'form': form})
 
     def post(self, request, id):
         post = Post.objects.get(id=id)

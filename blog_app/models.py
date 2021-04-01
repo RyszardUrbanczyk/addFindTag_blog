@@ -68,8 +68,6 @@ class Gallery(models.Model):
         return f'/gallery-detail/{self.id}'
 
 
-
-
 class Image(models.Model):
     name = models.CharField(max_length=200, unique=True, null=False)
     gallery_image = models.ImageField(null=False, blank=True, upload_to='images/')
