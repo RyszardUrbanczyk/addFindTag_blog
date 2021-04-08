@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.http import Http404
 from django.views import View
 from django.shortcuts import render, redirect
@@ -229,14 +230,26 @@ class EditPostView(View):
             return redirect('program-list')
         return render(request, 'edit-post.html', {'form': form})
 
-class FindPostView(View):
-
-    def get(self, request):
-        szukaj = request.GET.get('szukaj')
-        if szukaj is not None:
-            find_post = Post.objects.filter(body__icontains=szukaj)
-            find_tag = Tag.objects.filter(name__icontains=szukaj)
-            return render(request, 'find.html', {'find_post': find_post, 'find_tag': find_tag})
-        return render(request, 'find.html')
 
 # class FindPostView(View):
+#
+#     def get(self, request):
+#         szukaj = request.GET.get('szukaj')
+#         if szukaj is not None:
+#             object_list = Post.objects.filter(body__icontains=szukaj)
+#             find_tag = Tag.objects.filter(name__icontains=szukaj)
+#             return render(request, 'find.html', {'object_list': object_list, 'find_tag': find_tag})
+#         return render(request, 'find.html')
+
+
+class FindPostView(ListView):
+    model = Post
+    template_name = 'find.html'
+
+    def get_queryset(self):
+        if self.request.GET.get('szukaj') is not None:
+            query = self.request.GET.get('szukaj')
+            object_list = Post.objects.filter(
+                Q(title__icontains=query) | Q(body__icontains=query)
+            )
+            return object_list

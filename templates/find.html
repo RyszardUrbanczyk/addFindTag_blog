@@ -3,31 +3,28 @@
 {% block content %}
     <div class="form-group">
         <form method="get">
-            <input type="text" class="form-control" name="szukaj">
+            <input type="text" class="form-control" name="szukaj" placeholder="Szukaj...">
             <button type="submit" class="btn btn-primary mt-3">Wyślij</button>
         </form>
-{#    {{ form.as_p }}#}
-{#        {% bootstrap_form form %}#}
-{#    <button type="submit" class="btn btn-primary mt-3">Wyślij</button>#}
+
     </div>
     <div class="text-muted">
-        <strong>POSTY:</strong>
         <ul>
-            {% for i in find_post %}
-                <li>{{ i.body }} </li>
+            {% for post in object_list %}
+                <li>{{ post.title }}<br>{{ post.body }}</li>
             {% endfor %}
         </ul>
     </div>
-    <div class="text-muted">
-        <strong>TAGI:</strong>
-        <ul>
-            {% for i in find_tag %}
-                <li>{{ i.name }}:<br>
-                    {% for n in i.applications.all %}
-                        {{ n.name }},
-                    {% endfor %}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {#    <div class="text-muted">#}
+    {#        <strong>TAGI:</strong>#}
+    {#        <ul>#}
+    {#            {% for i in find_tag %}#}
+    {#                <li>{{ i.name }}:<br>#}
+    {#                    {% for n in i.applications.all %}#}
+    {#                        {{ n.name }},#}
+    {#                    {% endfor %}#}
+    {#                </li>#}
+    {#            {% endfor %}#}
+    {#        </ul>#}
+    {#    </div>#}
 {% endblock %}
