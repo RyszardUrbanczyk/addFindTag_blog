@@ -26,11 +26,6 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    # STATUS_CHOICES = [
-    #     ('draft', 'Draft'),
-    #     ('published', 'Published')
-    # ]
-
     title = models.CharField(max_length=120)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
@@ -39,14 +34,14 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     programs = models.ForeignKey(Program, on_delete=models.CASCADE)  # related_name='+'
 
+    class Meta:
+        verbose_name_plural = "posts"
+
     def __str__(self):
         return f'{self.title}'
 
     def get_detail_url(self):
         return f'/add-comment/{self.id}'
-
-    def get_detail_url_2(self):
-        return f'/edit-post/{self.id}'
 
 
 class Comment(models.Model):

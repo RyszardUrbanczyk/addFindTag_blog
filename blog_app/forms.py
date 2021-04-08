@@ -61,3 +61,7 @@ class EditPostForm(forms.ModelForm):
         model = Post
         exclude = ['author', 'body_image', 'programs']
         fields = '__all__'
+
+
+class SearchForm(forms.Form):
+    szukaj = forms.CharField()

@@ -18,24 +18,32 @@
 {% block content %}
     {% for post in posts %}
         <div class="card-mb-3 mb-2">
-            <h5 class="card-header bg-light">{{ post.title }}
+            <h5 class="card-header bg-light">{{ post.title }} –
                 <small>
-                    {{ post.publish|date:'d.m.Y H:i' }} &mdash;
-                    <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a>
+                    <a href="{{ post.get_detail_url }}" class="card-link">Dodaj komentarz</a><br>
                 </small>
             </h5>
             <div class="card-body">
                 Autor: {{ post.author }}<br>
+                <small>
+                    Opublikowano: {{ post.publish|date:'d.m.Y H:i' }} |
+                    Uaktualniono: {{ post.updated|date:'d.m.Y H:i' }}<br><br>
+                </small>
                 {{ post.body }}<br>
-                <small><a href="{{ post.get_detail_url_2 }}" class="card-link">Edytuj wpis</a></small><br><br>
+                {% if post.author == request.user %}
+                    <small><a href="{{ post.get_detail_url_2 }}" class="card-link">Edytuj wpis</a></small><br><br>
+                {% endif %}
                 {% if post.body_image %}
                     <img src="{{ post.body_image.url }}" width="350" alt="">
                 {% endif %}
                 <div class="card-body pl-5">
                     <small>
+                        Ilośc komentarzy: {{ post.comment_set.all.count }}
+                        <hr style="width:25%; height:1px;border-width:0;background-color:lightgrey;
+                        text-align:left;margin-left:0">
 
                         {% for comment in post.comment_set.all %}
-                            {{ comment.name }}<br>
+                            <strong>{{ comment.name }}</strong><br>
                             {{ comment.body }}<br>
                             <hr>
                         {% empty %}

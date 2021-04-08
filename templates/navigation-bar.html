@@ -9,7 +9,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index' %}">Startowa</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'program-list' %}">Programy</a>
                     </li>
@@ -25,34 +24,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'add-image' %}">Dodaj obrazek</a>
                     </li>
-                    {#                    {% if user.is_authenticated %}#}
-                    {#                        <li class="nav-item">#}
-                    {#                            <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>#}
-                    {#                        </li>#}
-                    {#                        <li class="nav-item nav-link">Witaj {{ user }} &rarr; <a href="{% url 'post-user' %}">Moje#}
-                    {#                            posty</a>#}
-                    {#                        </li>#}
-                    {#                    {% else %}#}
-                    {#                        <li class="nav-item">#}
-                    {#                            <a class="nav-link" href="{% url 'login' %}">Loguj</a>#}
-                    {#                        </li>#}
-                    {#                        <li class="nav-item">#}
-                    {#                            <a class="nav-link" href="{% url 'register' %}">Rejestracja</a>#}
-                    {#                        </li>#}
-                    {#                    {% endif %}#}
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'search' %}">Szukaj</a>
+                    </li>
                 </ul>
                 <!--
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Szukaj" aria-label="Search">
-                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Szukaj</button>
-                    </form>
-                    -->
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" name="szukaj" placeholder="Szukaj"
+                           aria-label="Search">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Szukaj</button>
+                </form>
+                -->
             </div>
         </nav>
     </div>
 
-    <!-- ################ second davbar ################ -->
+    <!-- ################ second navbar ################ -->
 
     <ul class="nav justify-content-end mb-2">
         <li class="nav-item">
@@ -66,7 +53,7 @@
                 <a class="nav-link" href="{% url 'logout' %}">Wyloguj</a>
             </li>
             <li class="nav-item nav-link">
-                Witaj: {{ user }}  &rarr; <a href="{% url 'post-user' %}">Moje posty</a>
+                Witaj: {{ user }} &rarr; <a href="{% url 'post-user' %}">Moje posty</a>
             </li>
         {% else %}
             <li class="nav-item">

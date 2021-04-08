@@ -5,8 +5,8 @@ from django.http import Http404
 from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
-from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, AddImageForm, EditPostForm
-
+from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, \
+    AddImageForm, EditPostForm
 from blog_app.models import Program, Post, Tag, Comment, Gallery
 
 
@@ -23,27 +23,20 @@ class BaseView(View):
 
 
 class ProgramListView(ListView):
+    """
+    List of all programs that are topics
+    for information exchange on the site.
+    """
     queryset = Program.objects.all()
     context_object_name = 'objects'
     # paginate_by = 2
     template_name = 'program-list.html'
 
 
-# class ProgramDetailView(LoginRequiredMixin, View):
-#
-#     def get(self, request, pk):
-#         program = Program.objects.get(pk=pk)
-#         posts = program.post_set.all()
-#         tags = program.tag_set.all()
-#         ctx = {'program': program,
-#                'posts': posts,
-#                'tags': tags
-#                }
-#
-#         return render(request, 'program-detail.html', ctx)
-
-
 class ProgramDetailView(LoginRequiredMixin, View):
+    """
+    View of a specific blog program / topic.
+    """
 
     def get(self, request, pk):
         program = Program.objects.get(pk=pk)
@@ -59,31 +52,10 @@ class ProgramDetailView(LoginRequiredMixin, View):
             posts = paginator.page(paginator.num_pages)
         ctx = {'program': program,
                'posts': posts,
-               'tags': tags
+               'tags': tags,
                }
 
         return render(request, 'program-detail.html', ctx)
-
-
-# class PostListView(LoginRequiredMixin, View):
-#
-#     def get(self, request):
-#         objects = Post.objects.all()
-#         paginator = Paginator(objects, 2)
-#         page = request.GET.get('page')
-#         try:
-#             objects = paginator.page(page)
-#         except PageNotAnInteger:
-#             objects = paginator.page(1)
-#         except EmptyPage:
-#             objects = paginator.page(paginator.num_pages)
-#
-#         ctx = {
-#                'page':page,
-#                'objects':objects
-#                }
-#
-#         return render(request, 'post-list.html', ctx)
 
 
 class AddProgramView(LoginRequiredMixin, CreateView):
@@ -96,22 +68,19 @@ class AddProgramView(LoginRequiredMixin, CreateView):
     success_url = '/program-list/'
 
 
-# class PostListView(View):
-#
-#     def get(self, request):
-#         posts = Post.objects.all()
-#         # posts = [{'title': p.title, 'body': p.body,
-#         'programs': p.programs.values_list('name', flat=True)} for p in po]
-#         ctx = {'objects': posts}
-#         return render(request, 'post-list.html', ctx)
-
-
 class AddPostView(LoginRequiredMixin, CreateView):
+    """
+    In this View is form to adding posts to database.
+    """
     template_name = 'add-post.html'
     form_class = AddPostForm
     success_url = '/program-list/'
 
     def form_valid(self, form):
+        """
+        We automatically pass the author field to the form,
+        which is the name of the logged in user.
+        """
         post = form.save(commit=False)
         post.author = self.request.user
         post.save()
@@ -119,6 +88,10 @@ class AddPostView(LoginRequiredMixin, CreateView):
 
 
 class RegisterView(View):
+    """
+    New user registration view.
+    """
+
     def get(self, request):
         form = RegisterForm()
         return render(request, 'form.html', {'form': form})
@@ -136,23 +109,11 @@ class RegisterView(View):
             return render(request, 'form.html', {'form': form})
 
 
-# 1 wersja działa
-# class AddCommentView(View):
-#
-#     def get(self, request, id):
-#         post = Post.objects.get(id=id)
-#         # comments = post.comment_set.all()
-#         return render(request, 'add-comment.html', {'post': post})
-#
-#     def post(self, request, id):
-#         post_id = Post.objects.get(id=id)
-#         name = request.POST['name']
-#         body = request.POST['body']
-#         comment = Comment.objects.create(name=name, body=body, post=post_id)
-#         return redirect(reverse('program-list'))
-
-# 2 wersja działa
 class AddCommentView(LoginRequiredMixin, View):
+    """
+    This view provides a form for adding comments to the database.
+    Comments about a specific(id) entry on the site.
+    """
 
     def get(self, request, id):
         form = AddCommentForm()
@@ -168,6 +129,9 @@ class AddCommentView(LoginRequiredMixin, View):
 
 
 class AddTag(LoginRequiredMixin, CreateView):
+    """
+    User can add tags to selected programs.
+    """
     template_name = 'add-tag.html'
     model = Tag
     fields = '__all__'
@@ -179,6 +143,9 @@ class AddTag(LoginRequiredMixin, CreateView):
 
 
 class ListPostLoggedUser(View):
+    """
+    The user can view the list of all his entries.
+    """
 
     def get(self, request):
         posts = Post.objects.filter(author=request.user)
@@ -186,6 +153,9 @@ class ListPostLoggedUser(View):
 
 
 class AddGalleryView(LoginRequiredMixin, CreateView):
+    """
+    In this view, the user can add a new gallery and its description.
+    """
     template_name = 'add-gallery.html'
     model = Gallery
     fields = '__all__'
@@ -193,18 +163,27 @@ class AddGalleryView(LoginRequiredMixin, CreateView):
 
 
 class GalleryListView(ListView):
+    """
+    List of all galleries.
+    """
     queryset = Gallery.objects.all()
     context_object_name = 'objects'
-    # paginate_by = 2
     template_name = 'gallery-list.html'
 
 
 class AddImageToGalleryView(LoginRequiredMixin, CreateView):
+    """
+    The user can add a picture to the selected gallery.
+    """
     template_name = 'add-image-to-gallery.html'
     form_class = AddImageForm
     success_url = '/add-image/?success=true'
 
     def form_valid(self, form):
+        """
+        We automatically pass the author field to the form,
+        which is the name of the logged in user.
+        """
         image = form.save(commit=False)
         image.author = self.request.user
         image.save()
@@ -219,6 +198,9 @@ class AddImageToGalleryView(LoginRequiredMixin, CreateView):
 
 
 class GalleryDetailView(LoginRequiredMixin, View):
+    """
+    Specific gallery view.
+    """
 
     def get(self, request, id):
         object = Gallery.objects.get(id=id)
@@ -227,21 +209,34 @@ class GalleryDetailView(LoginRequiredMixin, View):
 
 
 class EditPostView(View):
+    """
+    View of edit post.
+    """
 
     def get(self, request, id):
-
         post = Post.objects.get(id=id)
         if post.author != request.user:
             raise Http404
-        else:
+        else:  # Only the owner of the post can edit his post.
             form = EditPostForm(instance=post)
             return render(request, 'edit-post.html', {'form': form})
 
     def post(self, request, id):
         post = Post.objects.get(id=id)
         form = EditPostForm(instance=post, data=request.POST)
-
         if form.is_valid():
             form.save()
             return redirect('program-list')
         return render(request, 'edit-post.html', {'form': form})
+
+class FindPostView(View):
+
+    def get(self, request):
+        szukaj = request.GET.get('szukaj')
+        if szukaj is not None:
+            find_post = Post.objects.filter(body__icontains=szukaj)
+            find_tag = Tag.objects.filter(name__icontains=szukaj)
+            return render(request, 'find.html', {'find_post': find_post, 'find_tag': find_tag})
+        return render(request, 'find.html')
+
+# class FindPostView(View):
