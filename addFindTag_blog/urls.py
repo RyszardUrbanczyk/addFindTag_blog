@@ -41,5 +41,5 @@ urlpatterns = [
                   path('gallery-list/', views.GalleryListView.as_view(), name='gallery-list'),
                   path('add-image/', views.AddImageToGalleryView.as_view(), name='add-image'),
                   path('gallery-detail/<int:id>/', views.GalleryDetailView.as_view(), name='gallery-detail'),
-                  path('search/', views.FindPostView.as_view(), name='search'),
+                  path('search/', views.FindPostTagView.as_view(), name='search'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

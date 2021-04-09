@@ -3,7 +3,8 @@
 {% block content %}
     <div class="form-group">
         <form method="get">
-            <input type="text" class="form-control" name="szukaj" placeholder="Szukaj...">
+            {#            <form action="{% url 'search' %}" method="get">#}
+            <input type="text" class="form-control" name="query" placeholder="Szukaj...">
             <button type="submit" class="btn btn-primary mt-3">Wyślij</button>
         </form>
 
@@ -12,19 +13,23 @@
         <ul>
             {% for post in object_list %}
                 <li>{{ post.title }}<br>{{ post.body }}</li>
+
+            {% empty %}
+                {{ m }}
             {% endfor %}
+
         </ul>
+
     </div>
-    {#    <div class="text-muted">#}
-    {#        <strong>TAGI:</strong>#}
-    {#        <ul>#}
-    {#            {% for i in find_tag %}#}
-    {#                <li>{{ i.name }}:<br>#}
-    {#                    {% for n in i.applications.all %}#}
-    {#                        {{ n.name }},#}
-    {#                    {% endfor %}#}
-    {#                </li>#}
-    {#            {% endfor %}#}
-    {#        </ul>#}
-    {#    </div>#}
+            <div class="text-muted">
+                <ul>
+                    {% for i in tags %}
+                        <li>{{ i.name }}:<br>
+                            {% for n in i.applications.all %}
+                                {{ n.name }},
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
 {% endblock %}

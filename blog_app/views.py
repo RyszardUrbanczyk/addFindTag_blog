@@ -7,7 +7,7 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
 from blog_app.forms import AddPostForm, RegisterForm, AddCommentForm, AddTagForm, \
-    AddImageForm, EditPostForm
+    AddImageForm, EditPostForm, SearchForm
 from blog_app.models import Program, Post, Tag, Comment, Gallery
 
 
@@ -231,25 +231,35 @@ class EditPostView(View):
         return render(request, 'edit-post.html', {'form': form})
 
 
-# class FindPostView(View):
+class FindPostTagView(View):
+    """
+    Search post and tags
+    """
+
+    def get(self, request):
+        search = request.GET.get('query')
+        if search == '':
+            m = f'Wpisz szukane słowo.'
+            return render(request, 'find.html', {'m': m})
+        if search is not None:
+            object_list = Post.objects.filter(Q(title__icontains=search) | Q(body__icontains=search))
+            tags = Tag.objects.filter(name__icontains=search)
+            return render(request, 'find.html', {'object_list': object_list, 'tags': tags})
+
+        return render(request, 'find.html')
+
+# class FindPostView(ListView):
+#     model = Post
+#     template_name = 'find.html'
 #
-#     def get(self, request):
-#         szukaj = request.GET.get('szukaj')
-#         if szukaj is not None:
-#             object_list = Post.objects.filter(body__icontains=szukaj)
-#             find_tag = Tag.objects.filter(name__icontains=szukaj)
-#             return render(request, 'find.html', {'object_list': object_list, 'find_tag': find_tag})
-#         return render(request, 'find.html')
-
-
-class FindPostView(ListView):
-    model = Post
-    template_name = 'find.html'
-
-    def get_queryset(self):
-        if self.request.GET.get('szukaj') is not None:
-            query = self.request.GET.get('szukaj')
-            object_list = Post.objects.filter(
-                Q(title__icontains=query) | Q(body__icontains=query)
-            )
-            return object_list
+#     def get_queryset(self):
+#         search = self.request.GET.get('query')
+#         if search == '':
+#             m = f'Wpisz szukane słowo'
+#             return m
+#         if self.request.GET.get('query') is not None:
+#
+#             object_list = Post.objects.filter(
+#                 Q(title__icontains=search) | Q(body__icontains=search)
+#             )
+# return object_list
