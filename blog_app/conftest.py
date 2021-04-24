@@ -54,6 +54,7 @@ def posts():
                             body='Ale fajny post', programs=Program.objects.get(id=i))
     return posts
 
+
 # testy będą się uruchamiać na Heroku
 @pytest.fixture(autouse=True)
 def _use_static_files_storage(settings):
