@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from django.conf.global_settings import LOGIN_URL
 from django.template.context_processors import media
 from dotenv import load_dotenv
 
@@ -19,7 +19,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # from django.conf.global_settings import STATICFILES_DIRS
-from django.conf.global_settings import LOGIN_URL
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
