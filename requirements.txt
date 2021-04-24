@@ -18,3 +18,5 @@ six==1.15.0
 soupsieve==2.2
 sqlparse==0.4.1
 toml==0.10.2
+django-on-heroku==1.1.2
+python-dotenv==0.17.0

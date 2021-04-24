@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from blog_app.models import Program, Post, Tag, Comment, Gallery, Image
@@ -37,7 +38,9 @@ class RegisterForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         if cleaned_data['password1'] != cleaned_data['password2']:
-            raise ValidationError("Hasła się nie zgadzają")
+            raise ValidationError("Wpisłeś różne hasła!")
+        if User.objects.filter(username=cleaned_data['username']).exists():
+            raise ValidationError('Istnieje taki użytkownik!')
 
 
 class AddCommentForm(forms.ModelForm):

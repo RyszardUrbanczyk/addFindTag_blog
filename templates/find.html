@@ -1,35 +1,55 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-    <div class="form-group">
-        <form method="get">
-            {#            <form action="{% url 'search' %}" method="get">#}
-            <input type="text" class="form-control" name="query" placeholder="Szukaj...">
-            <button type="submit" class="btn btn-primary mt-3">Wyślij</button>
-        </form>
+    {#    <div class="form-group">#}
+    {#        <form method="get">#}
+    {#            <form action="{% url 'search' %}" method="get">#}
+    {#            <input type="text" class="form-control" name="query" placeholder="Szukaj...">#}
+    {#            <button type="submit" class="btn btn-primary mt-3">Wyślij</button>#}
+    {#        </form>#}
 
+    {#    </div>#}
+    <div class="text-muted">
+        <ul>
+            {% if sum_of_search %}
+                Ilość znalezionych rzeczy: <strong>{{ sum_of_search }}</strong>
+            {% else %}
+                {{ mk }}
+            {% endif %}{{ m }}<br><br>
+            {% if object_list %}
+                <small><strong>POSTY:</strong></small>
+            {% endif %}
+            {% for post in object_list %}
+                <li>{{ post.title }}<br>{{ post.body }}</li>
+{#            {% empty %}#}
+{#                {{ m }}#}
+            {% endfor %}
+        </ul>
     </div>
     <div class="text-muted">
         <ul>
-            {% for post in object_list %}
-                <li>{{ post.title }}<br>{{ post.body }}</li>
-
-            {% empty %}
-                {{ m }}
-            {% endfor %}
-
-        </ul>
-
-    </div>
-            <div class="text-muted">
-                <ul>
-                    {% for i in tags %}
-                        <li>{{ i.name }}:<br>
-                            {% for n in i.applications.all %}
-                                {{ n.name }},
-                            {% endfor %}
-                        </li>
+            {% if tags %}
+                <small><strong>TAGI:</strong></small>
+            {% endif %}
+            {% for i in tags %}
+                <li>{{ i.name }}:<br>
+                    {% for n in i.applications.all %}
+                        {{ n.name }},
                     {% endfor %}
-                </ul>
-            </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="text-muted">
+        <ul>
+            {% if programs %}
+                <small><strong>PROGRAMY:</strong></small>
+            {% endif %}
+            {% for i in programs %}
+                <li>{{ i.name }}<br>
+                    {{ i.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

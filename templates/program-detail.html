@@ -27,12 +27,13 @@
                 Autor: {{ post.author }}<br>
                 <small>
                     Opublikowano: {{ post.publish|date:'d.m.Y H:i' }} |
-                    Uaktualniono: {{ post.updated|date:'d.m.Y H:i' }}<br><br>
-                </small>
-                {{ post.body }}<br>
+                    Uaktualniono: {{ post.updated|date:'d.m.Y H:i' }}
+                </small><br>
                 {% if post.author == request.user %}
-                    <small><a href="{{ post.get_detail_url_2 }}" class="card-link">Edytuj wpis</a></small><br><br>
-                {% endif %}
+                    <small><a href="{{ post.get_detail_url_2 }}" class="card-link">Edytuj wpis</a></small><br>
+                {% endif %}<br>
+                {{ post.body }}<br><br>
+
                 {% if post.body_image %}
                     <img src="{{ post.body_image.url }}" width="350" alt="">
                 {% endif %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.http import Http404
@@ -28,7 +29,7 @@ class ProgramListView(ListView):
     List of all programs that are topics
     for information exchange on the site.
     """
-    queryset = Program.objects.all()
+    queryset = Program.objects.all().order_by('date_added')
     context_object_name = 'objects'
     # paginate_by = 2
     template_name = 'program-list.html'
@@ -102,6 +103,9 @@ class RegisterView(View):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            # if User.objects.filter(username=username).exists():
+            #     m = f'Isnieje taki użytkownik.'
+            #     return render(request, 'form.html', {'form': form, 'm':m})
             u = User.objects.create(username=username)
             u.set_password(password)
             u.save()
@@ -241,14 +245,23 @@ class FindPostTagView(View):
         if search == '':
             m = f'Wpisz szukane słowo.'
             return render(request, 'find.html', {'m': m})
+
         if search is not None:
             object_list = Post.objects.filter(Q(title__icontains=search) | Q(body__icontains=search))
             tags = Tag.objects.filter(name__icontains=search)
-            return render(request, 'find.html', {'object_list': object_list, 'tags': tags})
+            programs = Program.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
+            sum_of_search = len(object_list) + len(tags) + len(programs)
+            if sum_of_search == 0:
+                mk = f'Nic nie znaleziono.'
+                return render(request, 'find.html', {'mk': mk})
+            return render(request, 'find.html', {'object_list': object_list,
+                                                 'tags': tags,
+                                                 'programs': programs,
+                                                 'sum_of_search': sum_of_search})
 
         return render(request, 'find.html')
 
-# class FindPostView(ListView):
+# class FindPostTagView(ListView):
 #     model = Post
 #     template_name = 'find.html'
 #
@@ -257,9 +270,9 @@ class FindPostTagView(View):
 #         if search == '':
 #             m = f'Wpisz szukane słowo'
 #             return m
-#         if self.request.GET.get('query') is not None:
+#         if search is not None:
 #
 #             object_list = Post.objects.filter(
 #                 Q(title__icontains=search) | Q(body__icontains=search)
 #             )
-# return object_list
+#             return object_list

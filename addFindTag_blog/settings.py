@@ -12,8 +12,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+from django.template.context_processors import media
+from dotenv import load_dotenv
+load_dotenv()
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # from django.conf.global_settings import STATICFILES_DIRS
+from django.conf.global_settings import LOGIN_URL
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ij5##&akfm3igy^$0fem&v^mzkt!zi6+cvmer9e6+38czwmek*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG', False))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
 # Application definition
 
@@ -38,13 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
 
     'bootstrap4',
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,10 +88,11 @@ WSGI_APPLICATION = 'addFindTag_blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'addfindtag',
-        'HOST': 'localhost',
-        'USER': 'ryszardurbanczyk',
-        'PASSWORD': '',
+        "NAME": os.getenv("DATABASE_NAME"),
+        "USER": os.getenv("DATABASE_USER"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "HOST": os.getenv("DATABASE_HOST"),
+        "PORT": int(os.getenv("DATABASE_PORT", -1)),
     }
 }
 
@@ -120,20 +130,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+MEDIA_URL = os.getenv('MEDIA_URL', default='media/')
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = '/media/'
+STATIC_ROOT = BASE_DIR / 'staticfiles/'
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-if os.environ.get('GITHUB_WORKFLOW'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'github_actions',
-            'USER': "postgres",
-            'PASSWORD': "postgres",
-            'HOST': 'localhost',
-            'PORT': 5432,
-        }
-    }
+
+
+
+

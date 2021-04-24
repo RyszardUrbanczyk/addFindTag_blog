@@ -21,6 +21,16 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
+
+    env:
+      DEBUG: True
+      SECRET_KEY: 'eflx3hv4b7x5-2f1##fbulvw1dhve(+frl(_*gmuh8##@m-na7'
+      DATABASE_NAME: 'github_actions'
+      DATABASE_USER: 'postgres'
+      DATABASE_PASSWORD: 'postgres'
+      DATABASE_HOST: 'localhost'
+      DATABASE_PORT: 5432
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
